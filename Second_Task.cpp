@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <cstdlib>	//rand()
 using std::cout;
 using std::cin;
 using std::vector;
@@ -13,8 +14,8 @@ using std::string;
 
 //structure of student
 struct Student {
-	vector<int> hw;
-	int egz;
+	vector<int> hw;	//homework marks
+	int egz;	//exam mark
 	string name, surname;
 	double avg_final, med_final;	//average of final mark and median of final mark
 };
@@ -43,16 +44,39 @@ void getInput(vector<Student> &student)
 
 
 	//begin of 'input homework'
-	cout << "Dabar veskite namu darbu rezultatus (minimali verte 1, maksimali 10). Kai baigsite, iveskite \"egz\": ";
+	cout << "Dabar veskite namu darbu rezultatus (minimali verte 1, maksimali 10).\n";
+	cout << "Atsitiktiniam namu darbu ir egzaminu rezultatu sugeneravimui, rasykite \"rand\".\n";
+	cout << "Kai baigsite, iveskite \"egz\": ";
 	string temp_input;
 	while (temp_input != "egz")
 	{
 		cin >> temp_input;
+		//begin of 'randomize homework results'
+		if (temp_input == "rand")
+		{
+			int max_rand = 20;	//20 is maximum amount of homework currently
+			//begin of 'rand error message'
+			if (max_rand - student[count].hw.size() < 1)
+			{
+				cout << "Negeneruojama, kai yra virs " << max_rand << " namu darbu.";
+				continue;
+			}
+			//end of 'rand error message'
+
+			int rand_hw_num = rand() % (max_rand - student[count].hw.size());	
+
+			for (int i = 0; i < rand_hw_num; i++)
+				student[count].hw.push_back(1 + rand() % 10);	//randomize between 1 and 10
+			student[count].egz = 1 + rand() % 10;	//randomize exam
+
+			return;
+		}
+		//end of 'randomize homework results'
+
+		//get mark input
 		if (temp_input == "1" || temp_input == "2" || temp_input == "3" || temp_input == "4" || temp_input == "5" || temp_input == "6"
 			|| temp_input == "7" || temp_input == "8" || temp_input == "9" || temp_input == "10")//if the input is between 1 and 10 inclusive
-		{
 			student[count].hw.push_back(std::stoi(temp_input));	//add to hw array
-		}
 	}
 	//end of 'input homework'
 
@@ -114,6 +138,8 @@ int main()
     //variables
 	vector<Student> student;	//structure of Student
 	string end_var = "-2";
+
+	srand(time(NULL));
 
 	//begin of 'get student input'
 	while (end_var != "end")
