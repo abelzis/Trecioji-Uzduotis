@@ -16,7 +16,7 @@ Lengviausias būdas - tai parsisiųsti First_Task.exe failą ir jį paleisti. Pa
   - Papildytas **README** failas.
 
 
-### [v0.1a](https://github.com/abelzis/Antroji-Uzduotis/releases/tag/v0.1a) (pre-release) (2019-02-12)
+### [v0.1-alpha](https://github.com/abelzis/Antroji-Uzduotis/releases/tag/v0.1-alpha) (pre-release) (2019-02-12)
 **Pridėta**
   - Sukurta pradinė programos versija.
   - Galimybė įvesti neribotus studentų, bei namų darbų kiekius.
