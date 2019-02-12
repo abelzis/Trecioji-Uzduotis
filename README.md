@@ -12,6 +12,7 @@ Lengviausias būdas - tai parsisiųsti First_Task.exe failą ir jį paleisti. Pa
 
 **Koreguota**
   - Instrukcijos dabar aiškesnės.
+  - Programa dabar nebeužsidaro iškarto įrašius 'end'.
   - Papildytas **README** failas.
 
 
