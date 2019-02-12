@@ -30,8 +30,8 @@ void instructions()
 //function gets input and stores to student array
 void getInput(vector<Student> &student)
 {
-	student.push_back(Student());
-	int count = student.size() - 1;
+	student.push_back(Student());	//push back structure array
+	int count = student.size() - 1;	//get count of student
 	cout << "STUDENT SIZE: " << student.size() << "\n";
 
 	//get name
@@ -63,7 +63,7 @@ void getInput(vector<Student> &student)
 			}
 			//end of 'rand error message'
 
-			int rand_hw_num = rand() % (max_rand - student[count].hw.size());	
+			int rand_hw_num = rand() % (max_rand - student[count].hw.size());	//get random homework amount
 
 			for (int i = 0; i < rand_hw_num; i++)
 				student[count].hw.push_back(1 + rand() % 10);	//randomize between 1 and 10
@@ -161,5 +161,7 @@ int main()
 	//end of 'calculate average and median'
 	
 	printOutput(student);	//print results
+
+	system("pause");
 }
 
