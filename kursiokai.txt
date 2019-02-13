@@ -1,0 +1,7 @@
+Simas Simaitis 3 8 5 5 10 5 5 8
+Juozas Juozaitis 3 3 8
+Tomas Tomaitis 3 9 9 7 10 10 4 5 10 8 10 4
+Vydas Vydaitis 3 8
+Antanas Karolietis 9 10 8
+Antanas Vizmantas 6 8 8 10
+Antanas Karalaitis 8 9 10 10 10
