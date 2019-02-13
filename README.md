@@ -8,6 +8,7 @@ Lengviausias būdas - tai parsisiųsti First_Task.exe failą ir jį paleisti. Pa
 
 ### [v0.2](https://github.com/abelzis/Antroji-Uzduotis/releases/tag/v0.2) (2019-02-13)
 **Pridėta**
+  - Pridėtas pavyzdinis duomenų failas „kursiokai.txt“.
   - Galimybė paimti duomenis iš failo „kursiokai.txt“.
   - Rezultatai surikiuojami pagal vardą.
   
