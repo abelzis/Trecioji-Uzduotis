@@ -6,6 +6,14 @@ Lengviausias būdas - tai parsisiųsti **First_Task.exe** failą ir jį paleisti
 
 # Changelog
 
+### [v0.2.1](https://github.com/abelzis/Antroji-Uzduotis/releases/tag/v0.2.1) (2019-02-13)
+**Pridėta**
+  - Sukurtas **functions.cpp** failas, kuriame aprašytos programoje naudojamos funkcijos.
+  - Sukurtas **functions.h** failas, kuriame aprašyta *Student* struktūra bei deklaruotos funkcijos aprašytos **functions.cpp** faile.
+  
+**Koreguota**
+  - Papildytas **README** failas.
+
 ### [v0.2](https://github.com/abelzis/Antroji-Uzduotis/releases/tag/v0.2) (2019-02-13)
 **Pridėta**
   - Pridėtas pavyzdinis duomenų failas **kursiokai.txt**.
