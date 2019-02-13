@@ -2,14 +2,14 @@
 OOP antroji užduotis. Programa įvestus studentų duomenis apdoroja ir išveda galutinius įvertinimus.
 
 # Kaip paleisti programą?
-Lengviausias būdas - tai parsisiųsti First_Task.exe failą ir jį paleisti. Parsisiųsti galite paspaudę [čia](https://github.com/abelzis/Antroji-Uzduotis/raw/master/Second_Task.exe).
+Lengviausias būdas - tai parsisiųsti **First_Task.exe** failą ir jį paleisti. Parsisiųsti galite paspaudę [čia](https://github.com/abelzis/Antroji-Uzduotis/raw/master/Second_Task.exe).
 
 # Changelog
 
 ### [v0.2](https://github.com/abelzis/Antroji-Uzduotis/releases/tag/v0.2) (2019-02-13)
 **Pridėta**
-  - Pridėtas pavyzdinis duomenų failas „kursiokai.txt“.
-  - Galimybė paimti duomenis iš failo „kursiokai.txt“.
+  - Pridėtas pavyzdinis duomenų failas **kursiokai.txt**.
+  - Galimybė paimti duomenis iš failo **kursiokai.txt**.
   - Rezultatai surikiuojami pagal vardą.
   
 **Koreguota**
