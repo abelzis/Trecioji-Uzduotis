@@ -30,3 +30,5 @@ double avgCalc(vector<int> hw, int egz);
 double medCalc(vector<int> hw, int egz);
 bool compareNames(Student &a, Student &b);
 void printOutput(vector<Student> student);
+int longestName(vector<Student> student);
+int longestSurname(vector<Student> student);

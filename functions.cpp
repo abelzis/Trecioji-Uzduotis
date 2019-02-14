@@ -248,24 +248,50 @@ bool compareNames(Student &a, Student &b)
 	return b.name[0] > a.name[0];
 }
 
+//returns required setw amount for names
+int longestName(vector<Student> student)
+{
+	int longest = 0;
+	for (int i = 0; i < student.size(); i++)
+		if (student[i].name.length() > longest)
+			longest = student[i].name.length();
+	return longest;
+}
+
+
+//returns required setw amount for surnames
+int longestSurname(vector<Student> student)
+{
+	int longest = 0;
+	for (int i = 0; i < student.size(); i++)
+		if (student[i].surname.length() > longest)
+			longest = student[i].surname.length();
+	return longest;
+}
+
 
 //function prints output of stucture student
 void printOutput(vector<Student> student)
 {
 	std::sort(student.begin(), student.end(), compareNames);	//sort structures
 
+	//get lengths of the longest setw required
+	int setw_name_lenght = longestName(student) + 2;	//for names
+	int setw_surname_lenght = longestSurname(student) + 2;	//for surnames
+
+	//outputing results
 	cout << "\n\n";
-	cout << std::setw(24) << std::left << "Pavarde";
-	cout << " " << std::setw(24) << std::left << "Vardas";
+	cout << std::setw(setw_surname_lenght) << std::left << "Pavarde";
+	cout << " " << std::setw(setw_name_lenght) << std::left << "Vardas";
 	cout << " " << std::setw(10) << std::left << "VidGalut";
 	cout << " " << std::setw(10) << std::left << "MedGalut\n";
-	for (int i = 0; i < 24 + 24 + 10 + 10; i++)
+	for (int i = 0; i < setw_name_lenght + setw_surname_lenght + 10 + 10; i++)
 		cout << '-';
 	cout << "\n";
 	for (int i = 0; i < student.size(); i++)
 	{
-		cout << std::setw(24) << std::left << student[i].surname;
-		cout << " " << std::setw(24) << std::left << student[i].name;
+		cout << std::setw(setw_surname_lenght) << std::left << student[i].surname;
+		cout << " " << std::setw(setw_name_lenght) << std::left << student[i].name;
 		cout << " " << std::setw(10) << std::left << std::fixed << std::setprecision(2) << student[i].avg_final;
 		cout << " " << std::setw(10) << std::left << std::fixed << std::setprecision(2) << student[i].med_final << "\n";
 	}
