@@ -6,6 +6,12 @@ Lengviausias būdas - tai parsisiųsti **First_Task.exe** failą ir jį paleisti
 
 # Changelog
 
+### [v0.2.2](https://github.com/abelzis/Antroji-Uzduotis/releases/tag/v0.2.2) (2019-02-14)
+**Koreguota**
+  - Pataisytas rezultatų išvedimo formatavimas, atsižvelgiant į vardų bei pavardžių ilgius.
+  - Papildytas **README** failas.
+  
+
 ### [v0.2.1](https://github.com/abelzis/Antroji-Uzduotis/releases/tag/v0.2.1) (2019-02-13)
 **Pridėta**
   - Sukurtas **functions.cpp** failas, kuriame aprašytos programoje naudojamos funkcijos.
