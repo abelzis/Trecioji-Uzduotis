@@ -5,9 +5,23 @@
 void instructions()
 {
 	cout << "Programa suskaiciuoja namu darbu bei egzamino galutinius ivertinimus.\n";
-	cout << "Galite ivesti duomenis is failo, ivede 'file'.\n";
-	cout << "Norint baigti vesti studentu duomenis, pries pradedant aprasineti studenta, iveskite 'end'. Kitu atveju, iveskite bet ka: ";
+	cout << "Komandu sarasas:\n";
+	cout << "\t'file' nuskaito is 'kursiokai.txt' duomenis ir ikelia i std::vector.\n";
+	cout << "\t'Cfile' nuskaito is 'kursiokai.txt' duomenis ir ikelia i C-type array.\n";
+	cout << "\t'open' atidaro is naujo faila 'kursiokai.txt'.\n";
+	cout << "\t'C-array' leidzia ranka irasyti duomenis i C-type array.\n";
+	cout << "\t'end' israso rezultatus ir baigia darba.\n";
+	cout << "\tBet koks kitas tekstas leidzia ranka irasyti duomenis i std::vector.\n\n";
 }
+
+
+//opens file
+void openFile(ifstream& file)
+{
+	file.clear();
+	file.seekg(0, std::ios::beg);
+}
+
 
 
 //function gets input and stores to student array
@@ -73,7 +87,7 @@ void getInput(vector<Student> &student)
 
 
 //function reads from 'kursiokai.txt'
-void readFromKursiokai(vector<Student> &student, ifstream& kursiokai)
+void readFromKursiokai(ifstream& kursiokai, vector<Student> &student)
 {
 
 
@@ -110,7 +124,7 @@ void readFromKursiokai(vector<Student> &student, ifstream& kursiokai)
 			while (file_str[file_str_index] != ' ')	//search for whitespace
 				file_str_index++;
 
-			student[student_count].surname.append(file_str, 0, file_str_index);	//append name to structure
+			student[student_count].surname.append(file_str, 0, file_str_index);	//append surname to structure
 			file_str.erase(0, file_str_index + 1);	//delete name from temporary file_str string
 			//end of 'get surname'
 
@@ -203,7 +217,7 @@ void readFromKursiokai(vector<Student> &student, ifstream& kursiokai)
 
 
 //function returns the avarage value of the vector array
-double avgCalc(vector<int> hw, int egz)
+double avgCalc(const vector<int> hw, const int egz)
 {
 	//calculate the sum of array and return the average
 	int sum = 0;
@@ -217,7 +231,7 @@ double avgCalc(vector<int> hw, int egz)
 
 
 //function returns the median value of the vector array
-double medCalc(vector<int> hw, int egz)
+double medCalc(vector<int> hw, const int egz)
 {
 	//we need to sort the array in ascending order
 	std::sort(hw.begin(), hw.end());
@@ -296,3 +310,5 @@ void printOutput(vector<Student> student)
 		cout << " " << std::setw(10) << std::left << std::fixed << std::setprecision(2) << student[i].med_final << "\n";
 	}
 }
+
+
