@@ -6,6 +6,16 @@ Lengviausias būdas - tai parsisiųsti **First_Task.exe** failą ir jį paleisti
 
 # Changelog
 
+### [v0.2.3](https://github.com/abelzis/Antroji-Uzduotis/releases/tag/v0.2.3) (2019-02-17)
+**Pridėta**
+  - Galimybė saugoti duomenis C-type masyve.
+  - Galimybė iš naujo atidaryti *kursiokai.txt* failą.
+  - Skaičiuojamas laikas nuskaitant duomenis ir atliekant darbą su duomenimis.
+
+**Koreguota**
+  - Pataisyta programos instrukcija.
+  - Papildytas **README** failas.
+
 ### [v0.2.2](https://github.com/abelzis/Antroji-Uzduotis/releases/tag/v0.2.2) (2019-02-14)
 **Koreguota**
   - Pataisytas rezultatų išvedimo formatavimas, atsižvelgiant į vardų bei pavardžių ilgius.
