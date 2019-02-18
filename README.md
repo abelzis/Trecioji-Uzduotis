@@ -2,7 +2,7 @@
 OOP antroji užduotis. Programa įvestus studentų duomenis apdoroja ir išveda galutinius įvertinimus.
 
 # Kaip paleisti programą?
-Lengviausias būdas - tai parsisiųsti **First_Task.exe** failą ir jį paleisti. Parsisiųsti galite paspaudę [čia](https://github.com/abelzis/Antroji-Uzduotis/raw/master/Second_Task.exe).
+< WIP >
 
 # Changelog
 
