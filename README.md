@@ -2,7 +2,7 @@
 OOP antroji užduotis. Programa įvestus studentų duomenis apdoroja ir išveda galutinius įvertinimus.
 
 # Kaip paleisti programą?
-< WIP >
+Pasirinktoje IDE sukūrus naują konsolės programą, isikelti parsisiųstus failus ir juos sukompiliuoti. *Second_Task.cpp* yra pagrindinis (main) failas.
 
 # Changelog
 
