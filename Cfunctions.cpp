@@ -17,7 +17,7 @@ void MultiplyHwSize(CStudent *Cstudent, int const hw_count, int Cstudent_index)
 
 	Cstudent[Cstudent_index].hw_size *= 2;	//multiply size by two
 	delete[] Cstudent[Cstudent_index].hw;	//release the array
-	Cstudent[Cstudent_index].hw = new int[Cstudent[Cstudent_index].hw_size];	//create new array in Cstudent
+	Cstudent[Cstudent_index].hw = new unsigned char[Cstudent[Cstudent_index].hw_size];	//create new array in Cstudent
 
 	for (int i = 0; i < hw_count; i++)
 		Cstudent[Cstudent_index].hw[i] = temp[i];	//copy back each element to new array from temporary
@@ -290,7 +290,7 @@ void readFromKursiokai(ifstream& kursiokai, CStudent *&Cstudent, int &Cstudent_i
 
 
 //function returns the avarage value of the vector array
-double avgCalc(const int const *hw, const int hw_count, const int egz)
+double avgCalc(const unsigned char const *hw, const int hw_count, const int egz)
 {
 	//calculate the sum of array and return the average
 	int sum = 0;
@@ -304,7 +304,7 @@ double avgCalc(const int const *hw, const int hw_count, const int egz)
 
 
 //function returns the median value of the vector array
-double medCalc(int *hw, const int hw_count, const int egz)
+double medCalc(unsigned char *hw, const int hw_count, const int egz)
 {
 	//we need to sort the array in ascending order
 	std::sort(hw, hw + hw_count);
@@ -319,6 +319,7 @@ double medCalc(int *hw, const int hw_count, const int egz)
 			return 0.4*(double)((hw[hw_count / 2 - 1] + hw[hw_count / 2]) / 2) + 0.6*egz;
 		return 0;
 	}
+	return 0;
 }
 
 
