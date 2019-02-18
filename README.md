@@ -6,6 +6,10 @@ Lengviausias būdas - tai parsisiųsti **First_Task.exe** failą ir jį paleisti
 
 # Changelog
 
+### [v0.2.4](https://github.com/abelzis/Antroji-Uzduotis/releases/tag/v0.2.4) (2019-02-18)
+**Koreguota**
+  - C-type masyvas dabar naudoja mažiau atminties nei prieš tai.
+
 ### [v0.2.3](https://github.com/abelzis/Antroji-Uzduotis/releases/tag/v0.2.3) (2019-02-17)
 **Pridėta**
   - Galimybė saugoti duomenis C-type masyve.
