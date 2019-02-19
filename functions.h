@@ -36,8 +36,3 @@ bool compareNames(Student &a, Student &b);
 void printOutput(vector<Student> student);
 int longestName(vector<Student> student);
 int longestSurname(vector<Student> student);
-
-
-
-
-void CTypeGetInput(CStudent *Cstudent, int const Cstudent_index);

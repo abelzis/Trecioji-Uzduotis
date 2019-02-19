@@ -54,7 +54,17 @@ int main()
 				MultiplyCstudentSize(Cstudent, Cstudent_index, Cstudent_size);
 
 			Cstudent_index++;	//increment size by one
-			TypeGetInput(Cstudent, Cstudent_index);
+			
+			try
+			{
+				TypeGetInput(Cstudent, Cstudent_index);	//lets the user to write it's own input into C-type array
+			}
+			catch (const char* msg)	//if error
+			{
+				Cstudent_index--;
+				cout << "\n" << msg << "\n\n";	//print error message
+			}
+
 			continue;
 		}
 
@@ -69,7 +79,14 @@ int main()
 			continue;
 		}
 
-		getInput(student);	//lets the user to write it's own input
+		try 
+		{
+			getInput(student);	//lets the user to write it's own input into vector array
+		}
+		catch (const char* msg) //if error
+		{
+			cout << "\n" <<  msg << "\n\n";	//print error message
+		}
 	}
 	//end of 'get student input'
 

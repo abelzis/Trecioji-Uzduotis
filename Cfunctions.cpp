@@ -71,6 +71,11 @@ void TypeGetInput(CStudent *Cstudent, int const Cstudent_index)
 	while (temp_input != "egz")
 	{
 		cin >> temp_input;
+
+		//break if input is 'egz'
+		if (temp_input == "egz")
+			break;
+
 		//begin of 'randomize homework results'
 		if (temp_input == "rand")
 		{
@@ -116,14 +121,27 @@ void TypeGetInput(CStudent *Cstudent, int const Cstudent_index)
 			Cstudent[Cstudent_index].hw[hw_count] = std::stoi(temp_input);	//add mark to hw array
 			hw_count++;	//increment homework count
 		}
+		//if invalid character is inputed throw error message
+		else
+			throw "Invalid character(s). Expected numbers between 1 and 10.";
 	}
 	//end of 'input homework'
 
 	//begin of 'input of exam'
 	cout << "Iveskite egzamino rezultata (nuo 1 iki 10): ";
-	cin >> Cstudent[Cstudent_index].egz;
-	while (Cstudent[Cstudent_index].egz < 1 || Cstudent[Cstudent_index].egz > 10)
-		cin >> Cstudent[Cstudent_index].egz;
+	while (1)
+	{
+		cin >> temp_input;
+		if (temp_input == "1" || temp_input == "2" || temp_input == "3" || temp_input == "4" || temp_input == "5" || temp_input == "6"
+			|| temp_input == "7" || temp_input == "8" || temp_input == "9" || temp_input == "10")//if the input is between 1 and 10 inclusive
+			break;
+		cout << "Klaida. Neteisingas egzamino rezultato formatas. Iveskite egzamino rezultata (nuo 1 iki 10): ";
+	}
+
+	if (temp_input != "10")
+		Cstudent[Cstudent_index].egz = std::stoi(temp_input);
+	else
+		Cstudent[Cstudent_index].egz = 10;
 	//end of 'input of exam'
 
 	Cstudent[Cstudent_index].hw_count += hw_count;	//add the homework count
@@ -162,7 +180,11 @@ void readFromKursiokai(ifstream& kursiokai, CStudent *&Cstudent, int &Cstudent_i
 			//begin of 'get name'
 			int file_str_index = 0;	//index of file_str to point to characters
 			while (file_str[file_str_index] != ' ')	//search for whitespace
+			{
 				file_str_index++;	//increment by one
+				if (file_str_index >= file_str.length())	//check if array access violations are not broken
+					break;
+			}
 
 			Cstudent[Cstudent_index].name.append(file_str, 0, file_str_index);	//append name to structure
 			file_str.erase(0, file_str_index + 1);	//delete name from temporary file_str string
@@ -171,30 +193,72 @@ void readFromKursiokai(ifstream& kursiokai, CStudent *&Cstudent, int &Cstudent_i
 			//begin of 'get surname'
 			file_str_index = 0;	//index of file_str to point to characters
 			while (file_str[file_str_index] != ' ')	//search for whitespace
-				file_str_index++;
+			{
+				file_str_index++;	//increment by one
+				if (file_str_index >= file_str.length())	//check if array access violations are not broken
+					break;
+			}
 
 			Cstudent[Cstudent_index].surname.append(file_str, 0, file_str_index);	//append surname to structure
 			file_str.erase(0, file_str_index + 1);	//delete name from temporary file_str string
 			//end of 'get surname'
 
 			//begin of 'get exam'
-			if (isdigit(file_str[file_str.length() - 1]))	//if last character is digit
+			while (file_str.length() > 0)
 			{
-				if (file_str[file_str.length() - 1] == '0')	//if found 0
+				//begin of 'delete whitespaces at the end'
+				while (file_str[file_str.length() - 1] == ' ')
+					file_str.erase(file_str.length() - 1, 1);
+				//end of 'delete whitespaces at the end'
+
+				//begin of 'search for valid number'
+				int temp_index = 1, temp_length = file_str.length() - 1 - temp_index;
+				if (temp_length >= 0)	//temp_length should be atleast 0, in order to avoid accessing incorrect memory
+					while (file_str[file_str.length() - 1 - temp_index] != ' ' && file_str[file_str.length() - 1 - temp_index] != '1')	//add count to temp_index if wrong characters found
+						temp_index++;
+				//if any bad characters found, then erase them
+				if (temp_index > 1)
+					file_str.erase(file_str.length() - temp_index + 1, temp_index);	//erase bad characters
+				//end of 'search for valid number'
+
+				//begin of 'check if is digit'
+				if (isdigit(file_str[file_str.length() - 1]))	//if last character is digit
 				{
-					if (file_str[file_str.length() - 2 == '1'])	//if found 1 before 0
+					//begin of 'if 0 found'
+					if (file_str[file_str.length() - 1] == '0')	//if found 0
 					{
-						Cstudent[Cstudent_index].egz = 10;	//set .egz to 10
-						file_str.erase(file_str.length() - 3, 3);	//erase whitespace and two last characters
+						if (file_str[file_str.length() - 2 == '1'])	//if found 1 before 0
+						{
+							Cstudent[Cstudent_index].egz = 10;	//set .egz to 10
+							file_str.erase(file_str.length() - 3, 3);	//erase whitespace and two last characters
+							break;
+						}
+						else
+							file_str.erase(file_str.length() - 1, 1);
+						continue;
 					}
+					//end of 'if 0 found'
 
-				}
-				if (file_str[file_str.length() - 1] != '0')	//if found any other digit
-				{
-					Cstudent[Cstudent_index].egz = file_str[file_str.length() - 1] - '0';	//set .egz to that digit
-					file_str.erase(file_str.length() - 2, 2);	//erase whitespace and last character
-				}
+					//begin of 'if other digit found'
+					if (file_str[file_str.length() - 1] != '0')	//if found any other digit
+					{
+						Cstudent[Cstudent_index].egz = file_str[file_str.length() - 1] - '0';	//set .egz to that digit
 
+						if (file_str.length() == 1)	//if last character left
+							file_str.clear();	//erase last character
+
+						else if (file_str.length() - 2 > 0)
+							file_str.erase(file_str.length() - 2, 2);	//erase whitespace and last character
+
+						break;
+					}
+					//end of 'if other digit found'
+				}
+				//end of 'check if is digit'
+
+				//if not a digit found, just erase the symbol
+				else
+					file_str.erase(file_str.length() - 1, 1);
 			}
 			//end of 'get exam'
 
@@ -209,7 +273,7 @@ void readFromKursiokai(ifstream& kursiokai, CStudent *&Cstudent, int &Cstudent_i
 					//begin of 'any digit but 1'
 					if (file_str[file_str_index] != '1' && file_str[file_str_index] != '0')	//if found any digit but '1'
 					{
-						if (file_str[file_str_index + 1] == ' ' || file_str.length() == 1)	//if the digit is followed by whitespace or found last character
+						if (file_str[file_str_index + 1] == ' ' || file_str[file_str_index + 1] == '.' || file_str.length() == 1)	//if the digit is followed by whitespace or found last character
 						{
 							//if homework count exceed the homework size, multiply array size by two
 							if (hw_count + 1 >= Cstudent->hw_size)
@@ -218,11 +282,11 @@ void readFromKursiokai(ifstream& kursiokai, CStudent *&Cstudent, int &Cstudent_i
 							Cstudent[Cstudent_index].hw[hw_count] = file_str[file_str_index] - '0';	//insert mark into student homework
 							hw_count++;	//increment howework count
 						}
-
-						//if (file_str.length() == 1)
-						//	student[student_count].hw.push_back(file_str[file_str_index] - '0');
+						//else means there's junk we should erase
+						else
+							while (file_str[file_str_index] != ' ' && file_str.length() > 0)
+								file_str.erase(file_str_index, 1);
 					}
-
 					//end of 'any digit but 1'
 
 					//begin of 'found 1'
@@ -234,11 +298,12 @@ void readFromKursiokai(ifstream& kursiokai, CStudent *&Cstudent, int &Cstudent_i
 							if (hw_count + 1 >= Cstudent->hw_size)
 								MultiplyHwSize(Cstudent, hw_count, Cstudent_index);
 
-							Cstudent[Cstudent_index].hw[hw_count] = 1;	//insert mark into student homework
+							Cstudent[Cstudent_index].hw[hw_count] = 1;	//insert mark '1' into student homework
 							hw_count++;	//increment howework count
 						}
 
-						if (file_str[file_str_index + 1] == '0')	//if 1 is followed by 0
+						else if (file_str[file_str_index + 1] == '0')	//if 1 is followed by 0
+						{
 							if (file_str[file_str_index + 2] == ' ' || file_str.length() == 2)	//if 10 is followed by whitespace or found last 2 characters
 							{
 								//if homework count exceed the homework size, multiply array size by two
@@ -248,6 +313,11 @@ void readFromKursiokai(ifstream& kursiokai, CStudent *&Cstudent, int &Cstudent_i
 								Cstudent[Cstudent_index].hw[hw_count] = 10;	//insert mark into student homework
 								hw_count++;	//increment howework count
 							}
+						}
+						//else means there's junk we should erase
+						else
+							while (file_str[file_str_index] != ' ' && file_str.length() > 0)
+								file_str.erase(file_str_index, 1);
 					}
 					//end of 'found 1'
 				}
@@ -271,6 +341,15 @@ void readFromKursiokai(ifstream& kursiokai, CStudent *&Cstudent, int &Cstudent_i
 					continue;	//go next
 				}
 
+				////if found dot
+				//if (file_str[file_str_index] == '.')
+				//{
+				//	file_str_index = 0;
+				//	while (file_str[file_str_index] != ' ' && file_str.length() > 0)
+				//		file_str.erase(file_str_index, 1);
+				//	file_str_index = 0;
+				//	continue;
+				//}
 
 				file_str_index++;	//increment by 1
 			}
@@ -298,7 +377,14 @@ double avgCalc(const unsigned char const *hw, const int hw_count, const int egz)
 		sum += hw[i];
 
 	if (hw_count != 0)	//skip division by 0
-		return 0.4*(double)((double)sum / (double)hw_count) + 0.6*egz;
+	{
+		double avg = 0.4*(double)((double)sum / (double)hw_count) + 0.6*egz;
+		if (avg < 0 || avg > 10)
+			return 0;
+		return avg;
+	}
+	if (hw_count == 0 && egz >= 1 && egz <= 10)	//if no homeworks are done, but atleast exam is passed
+		return 0.6*egz;
 	return 0;
 }
 
@@ -311,12 +397,25 @@ double medCalc(unsigned char *hw, const int hw_count, const int egz)
 
 	//if odd
 	if (hw_count % 2 == 1)
-		return 0.4*(double)hw[hw_count / 2] + 0.6*egz;
+	{
+		double med = 0.4*(double)hw[hw_count / 2] + 0.6*egz;
+		if (med < 0 || med > 10)
+			return 0;
+		return med;
+	}
+
 	//if even
 	if (hw_count % 2 == 0)
 	{
 		if (hw_count != 0)	//skip division by 0
-			return 0.4*(double)((hw[hw_count / 2 - 1] + hw[hw_count / 2]) / 2) + 0.6*egz;
+		{
+			double med = 0.4*(double)(1.0*(hw[hw_count / 2 - 1] + 1.0*hw[hw_count / 2]) / 2) + 0.6*egz;
+			if (med < 0 || med > 10)
+				return 0;
+			return med;
+		}
+		if (hw_count == 0 && egz >= 1 && egz <= 10)	//if no homeworks are done, but atleast exam is passed
+			return 0.6*egz;
 		return 0;
 	}
 	return 0;
@@ -386,6 +485,7 @@ void printOutput(CStudent *Cstudent, int Cstudent_index)
 		cout << " " << std::setw(10) << std::left << std::fixed << std::setprecision(2) << Cstudent[i].avg_final;
 		cout << " " << std::setw(10) << std::left << std::fixed << std::setprecision(2) << Cstudent[i].med_final << "\n";
 	}
+	cout << "\nJei rezultatai lygus 0, vadinasi ivestis yra bloga.\n";
 }
 
 
