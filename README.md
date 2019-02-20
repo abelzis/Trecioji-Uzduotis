@@ -18,7 +18,7 @@ Pasirinktoje IDE sukūrus naują konsolės programą isikelti parsisiųstus *.h*
 **Koreguota**
   - C-type masyvas dabar naudoja mažiau atminties nei prieš tai.
   
- **Papildoma informacija bei pastebėjimai** (papildyta: 2019-02-20)
+ **Papildoma informacija bei pastebėjimai** **(papildyta: 2019-02-20)**
  
  Dėstytojas pasiūlė įdėja panaudoti optimizavimo vėliavėles, nes galbūt `vector` tipo konteineris nenaudoja greičiausių savo savybių, ir dar kartą patikrinti testavimą bei gautus rezultatus. Panaudojus optimizavimo vėliavėlę /O2, programos sparta padidėjo apie 10 kartų. Todėl testavimui padidinau studentų kiekį iki *207900*.
  ![Student Size](https://i.gyazo.com/9dbca8fbbccc7e23d3e3e40f8b64780b.png)
@@ -31,7 +31,7 @@ Pasirinktoje IDE sukūrus naują konsolės programą isikelti parsisiųstus *.h*
  
  ***`vector` ir `C-array` funkcijos yra ekvivalenčios. Pirma kurtas `vector`, tada perkopijuotas ir pakoreguotas atitinkamai į `C-array`.***
   
- (papildyta: 2019-02-19)
+ **(papildyta: 2019-02-19)**
  
  Atlikus nedidelį testą - leisti programai nuskaityti *7000* studentų su namų darbais bei egzaminais iš failo ir palyginti laiko bei atminties efektyvumą tarp `std::vector` bei `C-type array` konteinerių, akivaizdžiai matosi efektyvumo skirtumas tarp šių realizacijų. Tradicinis masyvas veikia maždaug 2 kartus greičiau, negu modernus `vector` tipo konteineris. Tai greičiausiai todėl, kad `vector` yra dalinai automatizuotas, siekiant sutaupyti atminties. Būtent todėl buvo matomas nemažas skirtumas: duomenims saugoti `vector` konteinery prireikė apie 4,2Mb atminties, kol tuo tarpu, C masyve - beveik 8Mb atminties. Tai leido suprasti, kuo skirtingi tipai skiriasi ne tik struktūra, bet ir efektyvumu.
  
