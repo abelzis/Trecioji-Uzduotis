@@ -10,7 +10,6 @@ Pasirinktoje IDE sukūrus naują konsolės programą isikelti parsisiųstus *.h*
   - Sumažinta tikimybė užlūžti programai priėmus neteisingus duomenis.
   - Sumažinta tikimybė neteisingai interpretuoti duomenis.
   - Papildytas *kuriokai.txt* tekstinio failo šablonas.
-  - Vidurkio bei medianos skaičiavimo formulės dabar veda 
   - Papildytos vidurkio bei medianos skaičiavimo formulės. Jei neatliktas joks namų darbas, pažymys bus sudarytas tik iš egzamino svorio padauginto iš egzamino rezultato. Jei nėra net ir egzaminų, išvedami nuliai. Jei duomenų perskaityt ir interpretuot neįmanoma - išvedami nuliai.
   - Papildytas ir pakoreguotas **README** failas.
 
