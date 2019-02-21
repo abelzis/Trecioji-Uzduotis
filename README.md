@@ -18,7 +18,13 @@ Pasirinktoje IDE sukūrus naują konsolės programą isikelti parsisiųstus *.h*
   - C-type masyvas dabar naudoja mažiau atminties nei prieš tai.
   
   ____________________________________________________________________________
- **Papildoma informacija bei pastebėjimai** **(papildyta: 2019-02-20)**
+ **Papildoma informacija bei pastebėjimai** **(papildyta: 2019-02-21)**
+ 
+ Dar vienas smagus pastebėjimas iš gerbiamo dėstytojo - debug mode yra daug lėtas, todėl patarė naudoti release mode. Ir iš tiesų - programa veikia gerokai efektyviau. Sparta dar kartą padidėjo apie 10 kartų tiek `vector` tipo konteineriui ![Vector release time](https://i.gyazo.com/08d6e05ded8757a2863528932808702c.png), tiek `C-array` tipo konteineriui ![C-array release time](https://i.gyazo.com/ff4fb268031b4ecb2e19ca5efcecfa91.png). Matome iš šių paveiksliukų, kad `vector` tipas jau panašus ir beveik toks pat greitas kaip `C-array` tipas (galima paklaida). Studentų kiekis - *207900*.
+ 
+ Kas dar nustebino, kad atminties kiekis *gerokai* sumažėjo. `vector` objektas naudojo vos tik 30Mb atminties (debug metu net 112Mb!) ![Vector release memory](https://i.gyazo.com/7356a1a6fc9a23449a88cd0f502b7af3.png), o `C-array` objektas naudojo 
+ 
+ **(papildyta: 2019-02-20)**
  
  Dėstytojas pasiūlė įdėja panaudoti optimizavimo vėliavėles, nes galbūt `vector` tipo konteineris nenaudoja greičiausių savo savybių, ir dar kartą patikrinti testavimą bei gautus rezultatus. Panaudojus optimizavimo vėliavėlę /O2, programos sparta padidėjo apie 10 kartų. Todėl testavimui padidinau studentų kiekį iki *207900*.
  ![Student Size](https://i.gyazo.com/9dbca8fbbccc7e23d3e3e40f8b64780b.png)
