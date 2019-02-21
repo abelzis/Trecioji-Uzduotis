@@ -20,9 +20,11 @@ Pasirinktoje IDE sukūrus naują konsolės programą isikelti parsisiųstus *.h*
   ____________________________________________________________________________
  **Papildoma informacija bei pastebėjimai** **(papildyta: 2019-02-21)**
  
- Dar vienas smagus pastebėjimas iš gerbiamo dėstytojo - debug mode yra daug lėtas, todėl patarė naudoti release mode. Ir iš tiesų - programa veikia gerokai efektyviau. Sparta dar kartą padidėjo apie 10 kartų tiek `vector` tipo konteineriui ![Vector release time](https://i.gyazo.com/08d6e05ded8757a2863528932808702c.png), tiek `C-array` tipo konteineriui ![C-array release time](https://i.gyazo.com/ff4fb268031b4ecb2e19ca5efcecfa91.png). Matome iš šių paveiksliukų, kad `vector` tipas jau panašus ir beveik toks pat greitas kaip `C-array` tipas (galima paklaida). Studentų kiekis - *207900*.
+ Dar vienas smagus pastebėjimas iš gerbiamo dėstytojo - debug mode yra daug lėtas, todėl patarė naudoti release mode. Ir iš tiesų - programa veikia gerokai efektyviau. Sparta dar kartą padidėjo apie 10 kartų tiek `vector` tipo konteineriui ![Vector release time](https://i.gyazo.com/c17e313d4a28426427f77c1e084360b9.png), tiek `C-array` tipo konteineriui ![C-array release time](https://i.gyazo.com/95d778e22c036e5d5c45f1c4962a6048.png). Matome iš šių paveiksliukų, kad `vector` tipas jau panašus ir beveik toks pat greitas kaip `C-array` tipas (galima paklaida). Studentų kiekis - *207900*.
  
- Kas dar nustebino, kad atminties kiekis *gerokai* sumažėjo. `vector` objektas naudojo vos tik 30Mb atminties (debug metu net 112Mb!) ![Vector release memory](https://i.gyazo.com/7356a1a6fc9a23449a88cd0f502b7af3.png), o `C-array` objektas naudojo 
+ Kas dar nustebino, kad atminties kiekis *gerokai* sumažėjo. `vector` objektas naudojo vos tik 30Mb atminties (debug metu net 112Mb!) ![Vector release memory](https://i.gyazo.com/7356a1a6fc9a23449a88cd0f502b7af3.png), o `C-array` objektas naudojo 57Mb atminties (debug metu net 132Mb) ![C-array release memory](https://i.gyazo.com/b1961be4ede59221889a25e63d9cea36.png).
+ 
+ **Pamoka išmokta - matuojant laika, atmintį ir panašius rezultatus, naudoti būtinai release mode, negu debug.**
  
  **(papildyta: 2019-02-20)**
  
