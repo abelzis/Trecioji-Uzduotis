@@ -24,7 +24,7 @@ Pasirinktoje IDE sukūrus naują konsolės programą isikelti parsisiųstus *.h*
  
  Kas dar nustebino, kad atminties kiekis *gerokai* sumažėjo. `vector` objektas naudojo vos tik 30Mb atminties (debug metu net 112Mb!) ![Vector release memory](https://i.gyazo.com/7356a1a6fc9a23449a88cd0f502b7af3.png), o `C-array` objektas naudojo 57Mb atminties (debug metu net 132Mb) ![C-array release memory](https://i.gyazo.com/b1961be4ede59221889a25e63d9cea36.png).
  
- **Pamoka išmokta - matuojant laika, atmintį ir panašius rezultatus, naudoti būtinai release mode, negu debug.**
+ **Pamoka išmokta - matuojant laika, atmintį ir panašius rezultatus, naudoti būtinai release mode, o ne debug.**
  
  **(papildyta: 2019-02-20)**
  
