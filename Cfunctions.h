@@ -26,10 +26,10 @@ struct CStudent {
 void MultiplyHwSize(CStudent *Cstudent, int const hw_count, int Cstudent_index);
 void MultiplyCstudentSize(CStudent *&Cstudent, int Cstudent_index, int &Cstudent_size);
 void TypeGetInput(CStudent *Cstudent, int const Cstudent_index);
-void readFromKursiokai(ifstream& kursiokai, CStudent *&Cstudent, int &Cstudent_index, int& Cstudent_size);
+void readFromFile(ifstream& kursiokai, CStudent *&Cstudent, int &Cstudent_index, int& Cstudent_size);
 double avgCalc(const unsigned char const *hw, const int hw_size, const int egz);
 double medCalc(unsigned char *hw, const int hw_size, const int egz);
-bool CcompareNames(CStudent &a, CStudent &b);
+//bool CcompareNames(CStudent &a, CStudent &b);
 int longestName(const CStudent *Cstudent, const int Cstudent_index);
 int longestSurname(const CStudent *Cstudent, const int Cstudent_index);
 void printOutput(CStudent *Cstudent, const int Cstudent_index);

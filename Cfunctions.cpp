@@ -150,7 +150,7 @@ void TypeGetInput(CStudent *Cstudent, int const Cstudent_index)
 
 
 //function reads from 'kursiokai.txt'
-void readFromKursiokai(ifstream& kursiokai, CStudent *&Cstudent, int &Cstudent_index, int &Cstudent_size)
+void readFromFile(ifstream& kursiokai, CStudent *&Cstudent, int &Cstudent_index, int &Cstudent_size)
 {
 
 
