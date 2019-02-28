@@ -5,7 +5,7 @@ OOP antroji užduotis. Programa įvestus studentų duomenis apdoroja ir išveda 
 Pasirinktoje IDE sukūrus naują konsolės programą isikelti į projektą parsisiųstus *.h* bei *.cpp* failus ir juos sukompiliuoti. Įvedimo failą galite patys sugeneruoti arba susikurti. *kursiokai.txt* yra pavyzdinis failas. *Second_Task.cpp* yra pagrindinis (main) failas.
 
 # Changelog
-### [v0.4](https://github.com/abelzis/Antroji-Uzduotis/releases/tag/v0.4) (2019-02-27)
+### [v0.4](https://github.com/abelzis/Antroji-Uzduotis/releases/tag/v0.4) (2019-02-28)
 **Pridėta**
   - Dabar yra galimybė atidaryti betkokį tekstinį *.txt* failą programos aplankale.
   - Galimybė generuoti atsitiktinius šabloninių vardų bei pavardžių studentų objektus su atsitiktiniais pažymiais (pažymių kiekis - nuo 0 iki 50).
