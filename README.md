@@ -19,6 +19,27 @@ Pasirinktoje IDE sukūrus naują konsolės programą isikelti į projektą parsi
   - Koreguotos bei papildytos instrukcijos.
   - `C-array` nebepalaikomas. Kitoje programos versijoje jo nebeliks.
   - Jei yra tik vienas pažymys, vadinasi, tai egzamino pažymys ir vidurkis bei mediana bus lygūs egzamino įvertinimui.
+  
+    ____________________________________________________________________________
+ **Papildoma informacija bei pastebėjimai** **(papildyta: 2019-02-28)**
+ 
+ Ketvirtoji programos versija privertė stebėti programos naudingą veikimo laiką, ypač kai buvo pridėtos failų generavimo bei geriausiųjų ir blogiausiųjų išvedimo į failus funkcijos. Teko matuoti laiką, kurį programa užtruko generuodama `10`, `100`, `1000`, `10000` bei `100000` objektų dydžių failus ir atliekant šiu objektų nuskaitymą, skaičiavimą bei išvedimą. 
+ 
+ Kiekvienam objektų kiekiui buvo atlikti laiko matavimai **10 kartų**, kiekvieną kartą iš naujo generuojant failą. Studento **įvertinimų kiekis gali svyruoti nuo 0 iki 50**. Programos parametrai: *Release mode*, `/O2` optimization. **Hipotezė**: kadangi duomenų kiekis kiekvieną kartą didėja 10 kartų, programos veikimo laikas turėtų taip pat didėti 10 kartų. **Rezultatai**:
+ 
+ ![Timing](https://i.gyazo.com/f12a641d1d6488ada4e252c34bc6e495.png)
+ 
+ Šioje lentelėje mėlyna spalva pažymėti langeliai rodo stulpelius su programos veikimo laiko matavimais sekundėmis. Geltona spalva - vidutiniai rezultatų išvesti laikai.
+ 
+  Palyginus santykinius laikų pokyčius tarp kiekvieno objektų dydžio pokyčio, gaunasi ne visai tai, ko tikėtasi - santykiniai laiko skirtumai pirmose iteracijose nesiekia net 5 kartų. Ir tik paskutinės iteracijos su didesniais duomenų kiekiais laikas skiriasi jau beveik 10 kartų. Pavaizdavau grafiku rezultatus:
+  
+ ![Time Graph](https://i.gyazo.com/d819c334442b39cc71beb228c93c2683.png)
+ 
+ Grafike matosi, kad 100 duomenų kiekis, kuris yra 10 kartų didesnis nei 10 duomenų kiekis, nors laikas pailgėjo tik 2 kartus - iš 0.0032sec iki 0.0062sec. Tik didesniuose duomenų kiekiuose laiko trukmių santykiai artėja duomenų kiekių santykiui.
+ 
+ Išvados: labai mažus kiekius duomenų mažiau apsimoka skaičiuoti, nei šiek tiek didesnius. Taip pat - laiko matavimo testas yra prastas, nes *60%* laiko sudarė atsitiktinio failo generavimas, *35%* laiko sudarė geriausiųjų ir blogiausiųjų išvedimas į atskirus failus, o like *5%* - duomenų nuskaitymas bei skaičiavimai. Vadinasi, **95%** laiko priklausė nuo rand() funkcijos, ir tik **5%** nuo pačio algoritmo.
+ 
+    ____________________________________________________________________________
 
 ### [v0.3](https://github.com/abelzis/Antroji-Uzduotis/releases/tag/v0.3) (2019-02-19)
 **Koreguota**
