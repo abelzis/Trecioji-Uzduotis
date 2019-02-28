@@ -5,6 +5,21 @@ OOP antroji užduotis. Programa įvestus studentų duomenis apdoroja ir išveda 
 Pasirinktoje IDE sukūrus naują konsolės programą isikelti parsisiųstus *.h* bei *.cpp* failus ir juos sukompiliuoti. *kursiokai.txt* failas turėtų būtų programos aplanke. *Second_Task.cpp* yra pagrindinis (main) failas.
 
 # Changelog
+### [v0.4](https://github.com/abelzis/Antroji-Uzduotis/releases/tag/v0.4) (2019-02-27)
+**Pridėta**
+  - Dabar yra galimybė atidaryti betkokį tekstinį *.txt* failą programos aplankale.
+  - Galimybė generuoti atsitiktinius šabloninių vardų bei pavardžių studentų objektus su atsitiktiniais pažymiais (pažymių kiekis - nuo 0 iki 50).
+  - Pridėta komanda skaičiuojanti galutinius vidurkius.
+  - Pridėta komanda skaičiuojanti galutinias medianas.
+  - Pridėta funkcija skirstanti studentus į *geresnius* (jei **galutinis vidurkis >= 5**) ir *blogesnius* (jei **galutinis vidurkis < 5**).
+  - Pridėta funkcija išrašanti į atskirus failus *geresnius* bei *blogesnius* studentus.
+
+**Koreguota**
+  - Programos veikimo matavimo laikas dabar yra tikslesnis (nanosekundžių tikslumu).
+  - Koreguotos bei papildytos instrukcijos.
+  - `C-array` nebepalaikomas. Kitoje programos versijoje jo nebeliks.
+  - Jei yra tik vienas pažymys, vadinasi, tai egzamino pažymys ir vidurkis bei mediana bus lygūs egzamino įvertinimui.
+
 ### [v0.3](https://github.com/abelzis/Antroji-Uzduotis/releases/tag/v0.3) (2019-02-19)
 **Koreguota**
   - Sumažinta tikimybė užlūžti programai priėmus neteisingus duomenis.
