@@ -37,7 +37,7 @@ Pasirinktoje IDE sukūrus naują konsolės programą isikelti į projektą parsi
  
  Grafike matosi, kad 100 duomenų kiekis, kuris yra 10 kartų didesnis nei 10 duomenų kiekis, nors laikas pailgėjo tik 2 kartus - iš 0.0032sec iki 0.0062sec. Tik didesniuose duomenų kiekiuose laiko trukmių santykiai artėja duomenų kiekių santykiui.
  
- Išvados: labai mažus kiekius duomenų mažiau apsimoka skaičiuoti, nei šiek tiek didesnius. Taip pat - laiko matavimo testas yra prastas, nes *60%* laiko sudarė atsitiktinio failo generavimas, *35%* laiko sudarė geriausiųjų ir blogiausiųjų išvedimas į atskirus failus, o like *5%* - duomenų nuskaitymas bei skaičiavimai. Vadinasi, **95%** laiko priklausė nuo rand() funkcijos, ir tik **5%** nuo pačio algoritmo.
+ **Išvados**: labai mažus kiekius duomenų mažiau apsimoka skaičiuoti, nei šiek tiek didesnius. Taip pat - laiko matavimo testas yra prastas, nes *60%* laiko sudarė atsitiktinio failo generavimas, *35%* laiko sudarė geriausiųjų ir blogiausiųjų išvedimas į atskirus failus, o like *5%* - duomenų nuskaitymas bei skaičiavimai. Vadinasi, **95%** laiko priklausė nuo rand() funkcijos, ir tik **5%** nuo pačio algoritmo.
  
     ____________________________________________________________________________
 
