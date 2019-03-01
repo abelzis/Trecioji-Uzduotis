@@ -2,10 +2,8 @@
 
 
 //function UI
-void takeInput(vector<Student>& student, vector<Student>& cool_stud, vector<Student>& lame_stud, 
+void takeInput(deque<Student>& student, deque<Student>& cool_stud, deque<Student>& lame_stud,
 	ifstream& file_inp,
-	int& Cstudent_index, int& Cstudent_size, 
-	CStudent *Cstudent, 
 	durationDouble& clock_file, durationDouble& clock_Cfile, tmPt& clock_temp)
 {
 	string end_var = "-2", ifstreamName = "kursiokai.txt", ofstreamName;
@@ -182,31 +180,6 @@ void takeInput(vector<Student>& student, vector<Student>& cool_stud, vector<Stud
 		}
 
 
-		//if user wants to read from file to C-type array
-		if (end_var == "Cfile")
-		{
-			cout << "Beginning to read from file...";
-
-			clock_temp = hrClock::now();
-
-			//read from kursiokai file
-			try
-			{
-				readFromFile(file_inp, Cstudent, Cstudent_index, Cstudent_size);
-			}
-			catch (const char* msg)	//if error catch message
-			{
-				cout << "\n" << msg << "\n\n";	//print error message
-				continue;
-			}
-
-
-			clock_Cfile += durationDouble(hrClock::now() - clock_temp);
-			cout << "Finished! Took: " << durationDouble(hrClock::now() - clock_temp).count() << "s\n";
-			continue;
-		}
-
-
 		//if user wants to write input into vector
 		if (end_var == "vector")
 		{
@@ -218,29 +191,6 @@ void takeInput(vector<Student>& student, vector<Student>& cool_stud, vector<Stud
 			{
 				cout << "\n" << msg << "\n\n";	//print error message
 			}
-		}
-
-
-		//if user wants to write input into C-type array
-		if (end_var == "C-array")
-		{
-			//if no more space in the C-type array, then recreate the array with double the capacity
-			if (Cstudent_index + 2 >= Cstudent_size)
-				MultiplyCstudentSize(Cstudent, Cstudent_index, Cstudent_size);
-
-			Cstudent_index++;	//increment size by one
-
-			try
-			{
-				TypeGetInput(Cstudent, Cstudent_index);	//lets the user to write it's own input into C-type array
-			}
-			catch (const char* msg)	//if error
-			{
-				Cstudent_index--;
-				cout << "\n" << msg << "\n\n";	//print error message
-			}
-
-			continue;
 		}
 
 
@@ -369,9 +319,7 @@ void instructions()
 	cout << "\t'open' leidzia atidaryti pasirinkta faila.\n";
 	cout << "\t'generate-file' leidzia sugeneruot faila su atsitiktiniais studentu duomenimis.\n";
 	cout << "\t'file' nuskaito is atidaryto failo duomenis ir ikelia i std::vector.\n";
-	cout << "\t'Cfile' nuskaito is atidaryto failo  duomenis ir ikelia i C-type array.\n";
 	cout << "\t'vector' leidzia ranka irasyti duomenis i vector.\n";
-	cout << "\t'C-array' leidzia ranka irasyti duomenis i C-type array.\n";
 	cout << "\t'avg' suskaiciuoja duomenu galutini vidurki.\n";
 	cout << "\t'med' suskaiciuoja duomenu galutini mediana.\n";
 	cout << "\t'best-worst' surusiuoja i atskirus vector geriausius studentus nuo blogiausiu.\n";
@@ -441,7 +389,7 @@ bool checkIfStrIsNum(const string str)
 
 
 //function gets input and stores to student array
-void getInput(vector<Student> &student)
+void getInput(deque<Student> &student)
 {
 	student.push_back(Student());	//push back structure array
 	int count = student.size() - 1;	//get count of student
@@ -603,24 +551,23 @@ int getExam(string& str)
 
 
 //function reads from 'kursiokai.txt'
-void readFromFile(ifstream& kursiokai, vector<Student> &student)
+void readFromFile(ifstream& file, deque<Student> &student)
 {
 
 
-	/*----------------STRUCTURE OF kursiokai.txt------------------------
+	/*----------------STRUCTURE OF filename.txt------------------------
 	Pavarde     Vardas      ND1  ND2   ND3  ND4  ND5 ...  Egzaminas
 	Vardas1     Pavarde1    8    9     10   6    10  ...  9
 	Vardas2     Pavarde2    7    10    8    5    4   ...  6
 	*/
 
 	//begin of 'if file open'
-	if (kursiokai.is_open())
+	if (file.is_open())
 	{
 		string file_str;	//temporary string holding file's lines
-		//std::getline(kursiokai, file_str);
-		//cout << file_str << "\n";
-		//begin of 'read from kursiokai'
-		while (std::getline(kursiokai, file_str))	//getlines until eof
+
+		//begin of 'read from file'
+		while (std::getline(file, file_str))	//getlines until eof
 		{
 			student.push_back(Student());	//push back
 			int student_count = student.size() - 1;	//counter to track indexes
@@ -717,7 +664,7 @@ void readFromFile(ifstream& kursiokai, vector<Student> &student)
 			//end of 'get homework'
 			//end of 'character scan from file_str'
 		}
-		//end of 'read from kursiokai'
+		//end of 'read from file'
 	}
 	//end of 'if file open'
 	//begin of 'if file is not open'
@@ -729,7 +676,7 @@ void readFromFile(ifstream& kursiokai, vector<Student> &student)
 
 
 //function returns the avarage value of the vector array
-double avgCalc(const vector<int> hw, const int egz)
+double avgCalc(const deque<int> hw, const int egz)
 {
 	//calculate the sum of array and return the average
 	int sum = 0;
@@ -750,7 +697,7 @@ double avgCalc(const vector<int> hw, const int egz)
 
 
 //function returns the median value of the vector array
-double medCalc(vector<int> hw, const int egz)
+double medCalc(deque<int> hw, const int egz)
 {
 	//we need to sort the array in ascending order
 	std::sort(hw.begin(), hw.end());
@@ -785,13 +732,13 @@ double medCalc(vector<int> hw, const int egz)
 
 
 //function picks students with higher or equal average final mark than 5 and puts them into 'cool' vector, otherwise in the 'loser' vector
-void sortBestWorst(const vector<Student> student, vector<Student>& cool, vector<Student>& lame)
+void sortBestWorst(const deque<Student> student, deque<Student>& cool, deque<Student>& lame)
 {
 	if (student.size() == 0)
 		throw "Error: main vector size is 0.";
 	//reserve capacity trying to avoid size reallocation
-	cool.reserve(student.capacity());
-	lame.reserve(student.capacity());
+	//cool.reserve(student.capacity());
+	//lame.reserve(student.capacity());
 	for (int i = 0; i < student.size(); i++)
 	{
 		student[i].avg_final;
@@ -809,7 +756,7 @@ void sortBestWorst(const vector<Student> student, vector<Student>& cool, vector<
 }
 
 
-void writeToFileBestWorst(const string ofstreamName_temp, const vector<Student> cool, const vector<Student> lame)
+void writeToFileBestWorst(const string ofstreamName_temp, const deque<Student> cool, const deque<Student> lame)
 {
 	//create file of cool
 	string file_name = "cool_" + ofstreamName_temp + ".txt";
@@ -861,7 +808,7 @@ bool compareNames(Student &a, Student &b)
 }
 
 //returns required setw amount for names
-int longestName(vector<Student> student)
+int longestName(deque<Student> student)
 {
 	int longest = 0;
 	for (int i = 0; i < student.size(); i++)
@@ -872,7 +819,7 @@ int longestName(vector<Student> student)
 
 
 //returns required setw amount for surnames
-int longestSurname(vector<Student> student)
+int longestSurname(deque<Student> student)
 {
 	int longest = 0;
 	for (int i = 0; i < student.size(); i++)
@@ -883,7 +830,7 @@ int longestSurname(vector<Student> student)
 
 
 //function prints output of stucture student
-void printOutput(vector<Student> student)
+void printOutput(deque<Student> student)
 {
 	std::sort(student.begin(), student.end(), compareNames);	//sort structures
 
