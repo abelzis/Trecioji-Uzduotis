@@ -10,7 +10,7 @@ Pasirinktoje IDE sukūrus naują konsolės programą isikelti į projektą parsi
   - Sukurti du atskiri *branches*. Abiejuose atlikti konteinerių pakitimai: viename `std::vector` pakeistas į `std::list`, o kitame `std::vector` pakeistas į `std::deque`.
   
 ____________________________________________________________________________
-   **Papildoma informacija bei pastebėjimai** **(papildyta: 2019-02-28)**
+   **Papildoma informacija bei pastebėjimai** **(papildyta: 2019-03-01)**
    
    Prieita dar viena versija, kurioje tikslas išbandyti įvairius C++ siūlomus konteinerius ir palyginti jų efektyvumą šios programos atveju. Bus naudojami šie konteineriai: `std::vector`, `std::list`, `std::deque`.
    
