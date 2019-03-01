@@ -2,11 +2,9 @@
 
 
 //function UI
-void takeInput(vector<Student>& student, vector<Student>& cool_stud, vector<Student>& lame_stud, 
+void takeInput(vector<Student>& student, vector<Student>& cool_stud, vector<Student>& lame_stud,
 	ifstream& file_inp,
-	int& Cstudent_index, int& Cstudent_size, 
-	CStudent *Cstudent, 
-	durationDouble& clock_file, durationDouble& clock_Cfile, tmPt& clock_temp)
+	durationDouble& clock_file, tmPt& clock_temp)
 {
 	string end_var = "-2", ifstreamName = "kursiokai.txt", ofstreamName;
 
@@ -182,31 +180,6 @@ void takeInput(vector<Student>& student, vector<Student>& cool_stud, vector<Stud
 		}
 
 
-		//if user wants to read from file to C-type array
-		if (end_var == "Cfile")
-		{
-			cout << "Beginning to read from file...";
-
-			clock_temp = hrClock::now();
-
-			//read from kursiokai file
-			try
-			{
-				readFromFile(file_inp, Cstudent, Cstudent_index, Cstudent_size);
-			}
-			catch (const char* msg)	//if error catch message
-			{
-				cout << "\n" << msg << "\n\n";	//print error message
-				continue;
-			}
-
-
-			clock_Cfile += durationDouble(hrClock::now() - clock_temp);
-			cout << "Finished! Took: " << durationDouble(hrClock::now() - clock_temp).count() << "s\n";
-			continue;
-		}
-
-
 		//if user wants to write input into vector
 		if (end_var == "vector")
 		{
@@ -218,29 +191,6 @@ void takeInput(vector<Student>& student, vector<Student>& cool_stud, vector<Stud
 			{
 				cout << "\n" << msg << "\n\n";	//print error message
 			}
-		}
-
-
-		//if user wants to write input into C-type array
-		if (end_var == "C-array")
-		{
-			//if no more space in the C-type array, then recreate the array with double the capacity
-			if (Cstudent_index + 2 >= Cstudent_size)
-				MultiplyCstudentSize(Cstudent, Cstudent_index, Cstudent_size);
-
-			Cstudent_index++;	//increment size by one
-
-			try
-			{
-				TypeGetInput(Cstudent, Cstudent_index);	//lets the user to write it's own input into C-type array
-			}
-			catch (const char* msg)	//if error
-			{
-				Cstudent_index--;
-				cout << "\n" << msg << "\n\n";	//print error message
-			}
-
-			continue;
 		}
 
 
@@ -272,6 +222,7 @@ void takeInput(vector<Student>& student, vector<Student>& cool_stud, vector<Stud
 			//end of 'calculate median'
 			continue;
 		}
+
 
 
 		//if 'best-worst' is selected, pick students with high marks in one array, and students with bad marks in another array
@@ -424,7 +375,7 @@ void generateFile(ofstream& file, const int count)
 	else
 		throw "Error: Can't read file.";
 }
-	
+
 
 
 //function checks if the given string is a number
@@ -642,7 +593,7 @@ void readFromFile(ifstream& kursiokai, vector<Student> &student)
 
 
 			//get value of the exam
-			student[student_count].egz = getExam(file_str);	
+			student[student_count].egz = getExam(file_str);
 
 			//begin of 'get homework'
 			str_index = 0;	//reset index
@@ -709,7 +660,7 @@ void readFromFile(ifstream& kursiokai, vector<Student> &student)
 					str_index = 0;
 					continue;
 				}
-					
+
 
 
 				str_index++;	//increment by 1
@@ -910,5 +861,3 @@ void printOutput(vector<Student> student)
 	}
 	cout << "\nJei rezultatai lygus 0, vadinasi ivestis yra bloga.\n";
 }
-
-
