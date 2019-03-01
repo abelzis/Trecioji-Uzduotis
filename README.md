@@ -8,6 +8,27 @@ Pasirinktoje IDE sukūrus naują konsolės programą isikelti į projektą parsi
 ### [v0.5](https://github.com/abelzis/Antroji-Uzduotis/releases/tag/v0.5) (2019-03-01)
 **Koreguota**
   - Sukurti du atskiri *branches*. Abiejuose atlikti konteinerių pakitimai: viename `std::vector` pakeistas į `std::list`, o kitame `std::vector` pakeistas į `std::deque`.
+  
+____________________________________________________________________________
+   **Papildoma informacija bei pastebėjimai** **(papildyta: 2019-02-28)**
+   
+   Prieita dar viena versija, kurioje tikslas išbandyti įvairius C++ siūlomus konteinerius ir palyginti jų efektyvumą šios programos atveju. Bus naudojami šie konteineriai: `std::vector`, `std::list`, `std::deque`.
+   
+   Yra žinoma bazinė informacija apie konteinerių struktūrą: `std::vector` yra eilė/masyvas elementų vienoje tiesėje, `std::list` yra dvipusis sąrašas, sujungtas rodyklėmis, `std::deque` yra sąrašas eilių/masyvų, sujungtų rodyklėmis. Programa neatlieka jokių elementų iterpimų į konteinerio vidurį ar šalinimų iš jo vidurio. Vadinasi, **Hipotezė**: `std::vector` ir `std::deque` turėtų užimti panašiai laiko (`std::vector` šiek tiek greitesnis), netoli, bet ne per daugiausiai atsilikti turėtų `std::list`.
+   
+   Atlikau laiko matavimus *Release mode*, `/02` optimization aplinkoje su milijonu (1,000,000) atsitiktinai sugeneruotų objektų (visą laiką naudojau tą patį failą). Rezultatai buvo išvesti į skirtingus failus (patikrinau, kad rezultatai sutaptų).
+   
+   **Rezultatai**:
+   
+   ![Time containers](https://i.gyazo.com/217f406581289aa7886c81b96754aa8d.png)
+   
+   Lentelėje pateikiau rezultatus laiko trukmės skirtingiems konteinerių tipams. Geltonam fone pažymėti atitinkami vidutiniai laikai. Aiškus lyderis - `std::vector`, nuo kurio ne per daugiausiai atsilieka `std::deque` (tikėjausi truputį mažiau atsiliks), ir paskutinioj vietoj, *ženkliai* prasčiau pasirodė `std::list`. Nelabai suprantu kodėl, nes testo metu nuskaitymą iš failo atliko greitai, taip pat apdorojimą atliko kaip `std::deque`, tačiau išrašinėjo į failą vėžlio greičiu. Tai nesuvokiu kokia priežastis to, nes funkcijų iš esmės nekeičiau...
+   
+   ![Time containers graph](https://i.gyazo.com/23fa3c9a583bc13a6bdb90cbcab5a4f2.png)
+   
+   **Išvados**: `std::vector` 95% atveju yra geriausias konteineris. Taškas.
+   
+____________________________________________________________________________
 
 # Changelog
 ### [v0.4](https://github.com/abelzis/Antroji-Uzduotis/releases/tag/v0.4) (2019-02-28)
@@ -25,12 +46,12 @@ Pasirinktoje IDE sukūrus naują konsolės programą isikelti į projektą parsi
   - `C-array` nebepalaikomas. Kitoje programos versijoje jo nebeliks.
   - Jei yra tik vienas pažymys, vadinasi, tai egzamino pažymys ir vidurkis bei mediana bus lygūs egzamino įvertinimui.
   
-    ____________________________________________________________________________
+____________________________________________________________________________
  **Papildoma informacija bei pastebėjimai** **(papildyta: 2019-02-28)**
  
  Ketvirtoji programos versija privertė stebėti programos naudingą veikimo laiką, ypač kai buvo pridėtos failų generavimo bei geriausiųjų ir blogiausiųjų išvedimo į failus funkcijos. Teko matuoti laiką, kurį programa užtruko generuodama `10`, `100`, `1000`, `10000` bei `100000` objektų dydžių failus ir atliekant šiu objektų nuskaitymą, skaičiavimą bei išvedimą. 
  
- Kiekvienam objektų kiekiui buvo atlikti laiko matavimai **10 kartų**, kiekvieną kartą iš naujo generuojant failą. Studento **įvertinimų kiekis gali svyruoti nuo 0 iki 50**. Programos parametrai: *Release mode*, `/O2` optimization. **Hipotezė**: kadangi duomenų kiekis kiekvieną kartą didėja 10 kartų, programos veikimo laikas turėtų taip pat didėti 10 kartų. **Rezultatai**:
+ Kiekvienam objektų kiekiui buvo atlikti laiko matavimai **10 kartų**, kiekvieną kartą iš naujo generuojant failą. Studento **įvertinimų kiekis gali svyruoti nuo 0 iki 50**. Programos parametrai: *Release mode*, `/02` optimization. **Hipotezė**: kadangi duomenų kiekis kiekvieną kartą didėja 10 kartų, programos veikimo laikas turėtų taip pat didėti 10 kartų. **Rezultatai**:
  
  ![Timing](https://i.gyazo.com/f12a641d1d6488ada4e252c34bc6e495.png)
  
@@ -44,7 +65,7 @@ Pasirinktoje IDE sukūrus naują konsolės programą isikelti į projektą parsi
  
  **Išvados**: labai mažus kiekius duomenų mažiau apsimoka skaičiuoti, nei šiek tiek didesnius. Taip pat - laiko matavimo testas yra prastas, nes *60%* laiko sudarė atsitiktinio failo generavimas, *35%* laiko sudarė geriausiųjų ir blogiausiųjų išvedimas į atskirus failus, o like *5%* - duomenų nuskaitymas bei skaičiavimai. Vadinasi, **95%** laiko priklausė nuo rand() funkcijos, ir tik **5%** nuo pačio algoritmo.
  
-    ____________________________________________________________________________
+____________________________________________________________________________
 
 ### [v0.3](https://github.com/abelzis/Antroji-Uzduotis/releases/tag/v0.3) (2019-02-19)
 **Koreguota**
@@ -58,7 +79,7 @@ Pasirinktoje IDE sukūrus naują konsolės programą isikelti į projektą parsi
 **Koreguota**
   - C-type masyvas dabar naudoja mažiau atminties nei prieš tai.
   
-  ____________________________________________________________________________
+____________________________________________________________________________
  **Papildoma informacija bei pastebėjimai** **(papildyta: 2019-02-21)**
  
  Dar vienas smagus pastebėjimas iš gerbiamo dėstytojo - debug mode yra daug lėtas, todėl patarė naudoti release mode. Ir iš tiesų - programa veikia gerokai efektyviau. Sparta dar kartą padidėjo apie 10 kartų tiek `vector` tipo konteineriui ![Vector release time](https://i.gyazo.com/c17e313d4a28426427f77c1e084360b9.png), tiek `C-array` tipo konteineriui ![C-array release time](https://i.gyazo.com/95d778e22c036e5d5c45f1c4962a6048.png). Matome iš šių paveiksliukų, kad `vector` tipas jau panašus ir beveik toks pat greitas kaip `C-array` tipas (galima paklaida). Studentų kiekis - *207900*.
@@ -86,7 +107,7 @@ Pasirinktoje IDE sukūrus naują konsolės programą isikelti į projektą parsi
  
  Galvojau, kaip galima optimizuot C tipo masyvą, nes `vector` sugebėjo. Prisiminiau, kad namų darbų vertės yra nuo 1 iki 10. Tai koks tikslas 5bitų skaičių saugoti 32bitų kintamajame (`int`)? Pakeisdamas tipą `int` į `unsigned char` namų darbų vertės yra saugomos tik 8bitų kintamuosiuose. Atlikus iš naujo, tą patį *7000* studentų įvedimo ir apdorojimo testą, atminties panaudojimas sumažėjo vos iki 5.1Mb, o sparta liko ta pati. Todėl sugebėjau sukurti 2 kartus greitesnį modulį, ir tik ~1.25 kartus užimantį daugiau atminties. Neblogas sandoris.
  
-   ____________________________________________________________________________
+____________________________________________________________________________
 
 ### [v0.2.3](https://github.com/abelzis/Antroji-Uzduotis/releases/tag/v0.2.3) (2019-02-17)
 **Pridėta**
