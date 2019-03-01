@@ -2,10 +2,8 @@
 
 
 //function UI
-void takeInput(vector<Student>& student, vector<Student>& cool_stud, vector<Student>& lame_stud, 
+void takeInput(list<Student>& student, list<Student>& cool_stud, list<Student>& lame_stud,
 	ifstream& file_inp,
-	int& Cstudent_index, int& Cstudent_size, 
-	CStudent *Cstudent, 
 	durationDouble& clock_file, durationDouble& clock_Cfile, tmPt& clock_temp)
 {
 	string end_var = "-2", ifstreamName = "kursiokai.txt", ofstreamName;
@@ -182,31 +180,6 @@ void takeInput(vector<Student>& student, vector<Student>& cool_stud, vector<Stud
 		}
 
 
-		//if user wants to read from file to C-type array
-		if (end_var == "Cfile")
-		{
-			cout << "Beginning to read from file...";
-
-			clock_temp = hrClock::now();
-
-			//read from kursiokai file
-			try
-			{
-				readFromFile(file_inp, Cstudent, Cstudent_index, Cstudent_size);
-			}
-			catch (const char* msg)	//if error catch message
-			{
-				cout << "\n" << msg << "\n\n";	//print error message
-				continue;
-			}
-
-
-			clock_Cfile += durationDouble(hrClock::now() - clock_temp);
-			cout << "Finished! Took: " << durationDouble(hrClock::now() - clock_temp).count() << "s\n";
-			continue;
-		}
-
-
 		//if user wants to write input into vector
 		if (end_var == "vector")
 		{
@@ -221,37 +194,14 @@ void takeInput(vector<Student>& student, vector<Student>& cool_stud, vector<Stud
 		}
 
 
-		//if user wants to write input into C-type array
-		if (end_var == "C-array")
-		{
-			//if no more space in the C-type array, then recreate the array with double the capacity
-			if (Cstudent_index + 2 >= Cstudent_size)
-				MultiplyCstudentSize(Cstudent, Cstudent_index, Cstudent_size);
-
-			Cstudent_index++;	//increment size by one
-
-			try
-			{
-				TypeGetInput(Cstudent, Cstudent_index);	//lets the user to write it's own input into C-type array
-			}
-			catch (const char* msg)	//if error
-			{
-				Cstudent_index--;
-				cout << "\n" << msg << "\n\n";	//print error message
-			}
-
-			continue;
-		}
-
-
 		//calculate average
 		if (end_var == "avg")
 		{
 			//begin of 'calculate average'
 			cout << "Beginning to calculate averages...";
 			clock_temp = hrClock::now();
-			for (int i = 0; i < student.size(); i++)
-				student[i].avg_final = avgCalc(student[i].hw, student[i].egz);	//calculate average
+			for (auto & it : student)
+				it.avg_final = avgCalc(it.hw, it.egz);	//calculate average
 			clock_file += durationDouble(hrClock::now() - clock_temp);
 			cout << "Finished! Took: " << durationDouble(hrClock::now() - clock_temp).count() << "s\n";
 			//end of 'calculate average'
@@ -265,8 +215,8 @@ void takeInput(vector<Student>& student, vector<Student>& cool_stud, vector<Stud
 			//begin of 'calculate median'
 			cout << "Beginning to calculate medians...";
 			clock_temp = hrClock::now();
-			for (int i = 0; i < student.size(); i++)
-				student[i].med_final = medCalc(student[i].hw, student[i].egz);	//calculate median
+			for (auto & it : student)
+				it.med_final = medCalc(it.hw, it.egz);	//calculate median
 			clock_file += durationDouble(hrClock::now() - clock_temp);
 			cout << "Finished! Took: " << durationDouble(hrClock::now() - clock_temp).count() << "s\n";
 			//end of 'calculate median'
@@ -369,9 +319,7 @@ void instructions()
 	cout << "\t'open' leidzia atidaryti pasirinkta faila.\n";
 	cout << "\t'generate-file' leidzia sugeneruot faila su atsitiktiniais studentu duomenimis.\n";
 	cout << "\t'file' nuskaito is atidaryto failo duomenis ir ikelia i std::vector.\n";
-	cout << "\t'Cfile' nuskaito is atidaryto failo  duomenis ir ikelia i C-type array.\n";
 	cout << "\t'vector' leidzia ranka irasyti duomenis i vector.\n";
-	cout << "\t'C-array' leidzia ranka irasyti duomenis i C-type array.\n";
 	cout << "\t'avg' suskaiciuoja duomenu galutini vidurki.\n";
 	cout << "\t'med' suskaiciuoja duomenu galutini mediana.\n";
 	cout << "\t'best-worst' surusiuoja i atskirus vector geriausius studentus nuo blogiausiu.\n";
@@ -441,87 +389,100 @@ bool checkIfStrIsNum(const string str)
 
 
 //function gets input and stores to student array
-void getInput(vector<Student> &student)
+void getInput(list<Student> &student)
 {
 	student.push_back(Student());	//push back structure array
 	int count = student.size() - 1;	//get count of student
 	cout << "STUDENT SIZE: " << student.size() << "\n";
 
-	//get name
-	cout << "Iveskite studento varda: ";
-	cin >> student[count].name;
-
-	//get surname
-	cout << "Iveskite studento pavarde: ";
-	cin >> student[count].surname;
-
-
-	//begin of 'input homework'
-	cout << "Dabar veskite namu darbu rezultatus (minimali verte 1, maksimali 10).\n";
-	cout << "Atsitiktiniam namu darbu ir egzaminu rezultatu sugeneravimui, rasykite \"rand\".\n";
-	cout << "Kai baigsite, iveskite \"egz\": ";
-	string temp_input;
-	while (temp_input != "egz")
+	for (std::list<Student>::iterator it = student.begin(); it != student.end(); ++it)
 	{
-		cin >> temp_input;
-
-		//break if input is 'egz'
-		if (temp_input == "egz")
-			break;
-
-		//begin of 'randomize homework results'
-		if (temp_input == "rand")
+		it++;
+		if (it == student.end())	//if final student is reached
 		{
-			int max_rand = 20;	//20 is maximum amount of homework currently
-			//begin of 'rand error message'
-			//if homework amount is 20 or more, don't randomize
-			if (max_rand - student[count].hw.size() < 1)
+			it--;
+
+			//get name
+			cout << "Iveskite studento varda: ";
+			cin >> it->name;
+
+			//get surname
+			cout << "Iveskite studento pavarde: ";
+			cin >> it->surname;
+
+
+			//begin of 'input homework'
+			cout << "Dabar veskite namu darbu rezultatus (minimali verte 1, maksimali 10).\n";
+			cout << "Atsitiktiniam namu darbu ir egzaminu rezultatu sugeneravimui, rasykite \"rand\".\n";
+			cout << "Kai baigsite, iveskite \"egz\": ";
+			string temp_input;
+			while (temp_input != "egz")
 			{
-				cout << "Negeneruojama, kai yra virs " << max_rand << " namu darbu.";
-				continue;
+				cin >> temp_input;
+
+				//break if input is 'egz'
+				if (temp_input == "egz")
+					break;
+
+				//begin of 'randomize homework results'
+				if (temp_input == "rand")
+				{
+					int max_rand = 20;	//20 is maximum amount of homework currently
+					//begin of 'rand error message'
+					//if homework amount is 20 or more, don't randomize
+					if (max_rand - it->hw.size() < 1)
+					{
+						cout << "Negeneruojama, kai yra virs " << max_rand << " namu darbu.";
+						continue;
+					}
+					//end of 'rand error message'
+
+					int rand_hw_num = rand() % (max_rand - it->hw.size());	//get random homework amount
+
+					//set randomized marks to homeworks and then exam
+					for (int i = 0; i < rand_hw_num; i++)
+						it->hw.push_back(1 + rand() % 10);	//randomize between 1 and 10
+					it->egz = 1 + rand() % 10;	//randomize exam
+
+					return;
+				}
+				//end of 'randomize homework results'
+
+				//get mark input
+				if (temp_input == "1" || temp_input == "2" || temp_input == "3" || temp_input == "4" || temp_input == "5" || temp_input == "6"
+					|| temp_input == "7" || temp_input == "8" || temp_input == "9" || temp_input == "10")//if the input is between 1 and 10 inclusive
+					it->hw.push_back(std::stoi(temp_input));	//add to hw array
+				//if invalid character is inputed throw error message
+				else
+				{
+					student.pop_back();	//delete the invalid object
+					throw "Invalid character(s). Expected numbers between 1 and 10.";
+				}
 			}
-			//end of 'rand error message'
+			//end of 'input homework'
 
-			int rand_hw_num = rand() % (max_rand - student[count].hw.size());	//get random homework amount
+			//begin of 'input of exam'
+			cout << "Iveskite egzamino rezultata (nuo 1 iki 10): ";
+			while (1)
+			{
+				cin >> temp_input;
+				if (temp_input == "1" || temp_input == "2" || temp_input == "3" || temp_input == "4" || temp_input == "5" || temp_input == "6"
+					|| temp_input == "7" || temp_input == "8" || temp_input == "9" || temp_input == "10")//if the input is between 1 and 10 inclusive
+					break;
+				cout << "Klaida. Neteisingas egzamino rezultato formatas. Iveskite egzamino rezultata (nuo 1 iki 10): ";
+			}
 
-			//set randomized marks to homeworks and then exam
-			for (int i = 0; i < rand_hw_num; i++)
-				student[count].hw.push_back(1 + rand() % 10);	//randomize between 1 and 10
-			student[count].egz = 1 + rand() % 10;	//randomize exam
-
-			return;
+			if (temp_input != "10")
+				it->egz = std::stoi(temp_input);
+			else
+				it->egz = 10;
+			//end of 'input of exam'
 		}
-		//end of 'randomize homework results'
-
-		//get mark input
-		if (temp_input == "1" || temp_input == "2" || temp_input == "3" || temp_input == "4" || temp_input == "5" || temp_input == "6"
-			|| temp_input == "7" || temp_input == "8" || temp_input == "9" || temp_input == "10")//if the input is between 1 and 10 inclusive
-			student[count].hw.push_back(std::stoi(temp_input));	//add to hw array
-		//if invalid character is inputed throw error message
 		else
-		{
-			student.pop_back();	//delete the invalid object
-			throw "Invalid character(s). Expected numbers between 1 and 10.";
-		}
+			it--;
 	}
-	//end of 'input homework'
-
-	//begin of 'input of exam'
-	cout << "Iveskite egzamino rezultata (nuo 1 iki 10): ";
-	while (1)
-	{
-		cin >> temp_input;
-		if (temp_input == "1" || temp_input == "2" || temp_input == "3" || temp_input == "4" || temp_input == "5" || temp_input == "6"
-			|| temp_input == "7" || temp_input == "8" || temp_input == "9" || temp_input == "10")//if the input is between 1 and 10 inclusive
-			break;
-		cout << "Klaida. Neteisingas egzamino rezultato formatas. Iveskite egzamino rezultata (nuo 1 iki 10): ";
-	}
-
-	if (temp_input != "10")
-		student[count].egz = std::stoi(temp_input);
-	else
-		student[count].egz = 10;
-	//end of 'input of exam'
+		
+	
 }
 
 
@@ -603,32 +564,36 @@ int getExam(string& str)
 
 
 //function reads from 'kursiokai.txt'
-void readFromFile(ifstream& kursiokai, vector<Student> &student)
+void readFromFile(ifstream& file, list<Student> &student)
 {
 
 
-	/*----------------STRUCTURE OF kursiokai.txt------------------------
+	/*----------------STRUCTURE OF filename.txt------------------------
 	Pavarde     Vardas      ND1  ND2   ND3  ND4  ND5 ...  Egzaminas
 	Vardas1     Pavarde1    8    9     10   6    10  ...  9
 	Vardas2     Pavarde2    7    10    8    5    4   ...  6
 	*/
 
 	//begin of 'if file open'
-	if (kursiokai.is_open())
+	if (file.is_open())
 	{
 		string file_str;	//temporary string holding file's lines
-		//std::getline(kursiokai, file_str);
-		//cout << file_str << "\n";
-		//begin of 'read from kursiokai'
-		while (std::getline(kursiokai, file_str))	//getlines until eof
+
+		list<Student>::iterator it = student.end();	//create iterator for student
+		if (it != student.begin())
+			it--;
+
+		//begin of 'read from file'
+		while (std::getline(file, file_str))	//getlines until eof
 		{
 			student.push_back(Student());	//push back
-			int student_count = student.size() - 1;	//counter to track indexes
+			it--;
+			//it++;
 
 			//begin of 'character scan from file_str'
 			//begin of 'get name'
 			int str_index = getUntilWhitespace(file_str);	//returns (name) character count of a single word substring
-			student[student_count].name.append(file_str, 0, str_index);	//append name to structure
+			it->name.append(file_str, 0, str_index);	//append name to structure
 			file_str.erase(0, str_index + 1);	//delete name from temporary file_str string
 			//end of 'get name'
 
@@ -636,13 +601,13 @@ void readFromFile(ifstream& kursiokai, vector<Student> &student)
 
 			//begin of 'get surname'
 			str_index = getUntilWhitespace(file_str);	//returns (surname) character count of a single word substring
-			student[student_count].surname.append(file_str, 0, str_index);	//append surname to structure
+			it->surname.append(file_str, 0, str_index);	//append surname to structure
 			file_str.erase(0, str_index + 1);	//delete name from temporary file_str string
 			//end of 'get surname'
 
 
 			//get value of the exam
-			student[student_count].egz = getExam(file_str);	
+			it->egz = getExam(file_str);
 
 			//begin of 'get homework'
 			str_index = 0;	//reset index
@@ -655,7 +620,7 @@ void readFromFile(ifstream& kursiokai, vector<Student> &student)
 					if (file_str[str_index] != '1' && file_str[str_index] != '0')	//if found any digit but '1'
 					{
 						if (file_str[str_index + 1] == ' ' || file_str[str_index + 1] == '.' || file_str.length() == 1)	//if the digit is followed by whitespace or found last character
-							student[student_count].hw.push_back(file_str[str_index] - '0');	//push back into student homework the mark
+							it->hw.push_back(file_str[str_index] - '0');	//push back into student homework the mark
 						//else means there's junk we should erase
 						else
 							while (file_str[str_index] != ' ' && file_str.length() > 0)
@@ -667,11 +632,11 @@ void readFromFile(ifstream& kursiokai, vector<Student> &student)
 					if (file_str[str_index] == '1')	//if found '1'
 					{
 						if (file_str[str_index + 1] == ' ')	//if 1 is followed by whitespace
-							student[student_count].hw.push_back(1);	//push back 1
+							it->hw.push_back(1);	//push back 1
 						else if (file_str[str_index + 1] == '0')	//if 1 is followed by 0
 						{
 							if (file_str[str_index + 2] == ' ' || file_str.length() == 2)	//if 10 is followed by whitespace or found last 2 characters
-								student[student_count].hw.push_back(10);	//push back 10
+								it->hw.push_back(10);	//push back 10
 						}
 						//else means there's junk we should erase
 						else
@@ -716,8 +681,9 @@ void readFromFile(ifstream& kursiokai, vector<Student> &student)
 			}
 			//end of 'get homework'
 			//end of 'character scan from file_str'
+			it++;	//increment iterator
 		}
-		//end of 'read from kursiokai'
+		//end of 'read from file'
 	}
 	//end of 'if file open'
 	//begin of 'if file is not open'
@@ -729,12 +695,12 @@ void readFromFile(ifstream& kursiokai, vector<Student> &student)
 
 
 //function returns the avarage value of the vector array
-double avgCalc(const vector<int> hw, const int egz)
+double avgCalc(const list<int> hw, const int egz)
 {
 	//calculate the sum of array and return the average
 	int sum = 0;
-	for (int i = 0; i < hw.size(); i++)
-		sum += hw[i];
+	for (auto const & it : hw)
+		sum += it;
 
 	if (hw.size() != 0)	//skip division by 0
 	{
@@ -750,15 +716,18 @@ double avgCalc(const vector<int> hw, const int egz)
 
 
 //function returns the median value of the vector array
-double medCalc(vector<int> hw, const int egz)
+double medCalc(list<int> hw, const int egz)
 {
 	//we need to sort the array in ascending order
-	std::sort(hw.begin(), hw.end());
+	hw.sort();
+
+	std::list<int>::iterator it = hw.begin();
+	std::advance(it, std::distance(hw.begin(), hw.end()) / 2);
 
 	//if odd
 	if (hw.size() % 2 == 1)
 	{
-		double med = 0.4*(double)hw[hw.size() / 2] + 0.6*egz;
+		double med = 0.4*(double)(*it) + 0.6*egz;
 		if (med < 0 || med > 10)
 			return 0;
 		return med;
@@ -769,7 +738,7 @@ double medCalc(vector<int> hw, const int egz)
 	{
 		if (hw.size() != 0)	//skip division by 0
 		{
-			double med = 0.4*((1.0*hw[hw.size() / 2 - 1] + 1.0*hw[hw.size() / 2]) / 2) + 0.6*egz;
+			double med = 0.4*((1.0*(*it) + 1.0*(*(++it))) / 2) + 0.6*egz;
 			if (med < 0 || med > 10)
 				return 0;
 			return med;
@@ -785,31 +754,30 @@ double medCalc(vector<int> hw, const int egz)
 
 
 //function picks students with higher or equal average final mark than 5 and puts them into 'cool' vector, otherwise in the 'loser' vector
-void sortBestWorst(const vector<Student> student, vector<Student>& cool, vector<Student>& lame)
+void sortBestWorst(const list<Student> student, list<Student>& cool, list<Student>& lame)
 {
 	if (student.size() == 0)
 		throw "Error: main vector size is 0.";
 	//reserve capacity trying to avoid size reallocation
-	cool.reserve(student.capacity());
-	lame.reserve(student.capacity());
-	for (int i = 0; i < student.size(); i++)
+	//cool.reserve(student.capacity());
+	//lame.reserve(student.capacity());
+	for (auto & it : student)
 	{
-		student[i].avg_final;
-		if (student[i].avg_final >= 5 && student[i].avg_final <= 10)	//if avg is not lower than 5, the student is considered cool
+		if (it.avg_final >= 5 && it.avg_final <= 10)	//if avg is not lower than 5, the student is considered cool
 		{
-			cool.push_back(student[i]);
+			cool.push_back(it);
 			continue;
 		}
-		if (student[i].avg_final > 0 && student[i].avg_final < 5)	//if avg is lower than 5, the student is considered loser
-			lame.push_back(student[i]);
+		if (it.avg_final > 0 && it.avg_final < 5)	//if avg is lower than 5, the student is considered loser
+			lame.push_back(it);
 	}
 	//shrink to fit (save memory)
-	cool.shrink_to_fit();
-	lame.shrink_to_fit();
+	//cool.shrink_to_fit();
+	//lame.shrink_to_fit();
 }
 
 
-void writeToFileBestWorst(const string ofstreamName_temp, const vector<Student> cool, const vector<Student> lame)
+void writeToFileBestWorst(const string ofstreamName_temp, const list<Student> cool, const list<Student> lame)
 {
 	//create file of cool
 	string file_name = "cool_" + ofstreamName_temp + ".txt";
@@ -817,8 +785,8 @@ void writeToFileBestWorst(const string ofstreamName_temp, const vector<Student> 
 
 	//write data to file
 	if (file_cool.is_open())	//if file_cool is open
-		for (int i = 0; i < cool.size(); i++)
-			file_cool << cool[i].name << " " << cool[i].surname << " " << std::fixed << std::setprecision(2) << cool[i].avg_final << "\n";	//output data of cool students
+		for (auto const& it : cool)
+			file_cool << it.name << " " << it.surname << " " << std::fixed << std::setprecision(2) << it.avg_final << "\n";	//output data of cool students
 	//else error
 	else
 	{
@@ -834,8 +802,8 @@ void writeToFileBestWorst(const string ofstreamName_temp, const vector<Student> 
 
 	//write data to file
 	if (file_lame.is_open())	//if file_lame is open
-		for (int i = 0; i < lame.size(); i++)
-			file_lame << lame[i].name << " " << lame[i].surname << " " << std::fixed << std::setprecision(2) << lame[i].avg_final << "\n";	//output data of lame students
+		for (auto const& it : lame)
+			file_lame << it.name << " " << it.surname << " " << std::fixed << std::setprecision(2) << it.avg_final << "\n";	//output data of lame students
 	//else error
 	else
 	{
@@ -861,31 +829,32 @@ bool compareNames(Student &a, Student &b)
 }
 
 //returns required setw amount for names
-int longestName(vector<Student> student)
+int longestName(list<Student> student)
 {
 	int longest = 0;
-	for (int i = 0; i < student.size(); i++)
-		if (student[i].name.length() > longest)
-			longest = student[i].name.length();
+	for (auto const& it : student)
+		if (it.name.length() > longest)
+			longest = it.name.length();
 	return longest;
 }
 
 
 //returns required setw amount for surnames
-int longestSurname(vector<Student> student)
+int longestSurname(list<Student> student)
 {
 	int longest = 0;
-	for (int i = 0; i < student.size(); i++)
-		if (student[i].surname.length() > longest)
-			longest = student[i].surname.length();
+	for (auto const& it : student)
+		if (it.surname.length() > longest)
+			longest = it.surname.length();
 	return longest;
 }
 
 
 //function prints output of stucture student
-void printOutput(vector<Student> student)
+void printOutput(list<Student> student)
 {
-	std::sort(student.begin(), student.end(), compareNames);	//sort structures
+	//std::sort(student.begin(), student.end(), compareNames);	//sort structures
+	student.sort(compareNames);
 
 	//get lengths of the longest setw required
 	int setw_name_lenght = longestName(student) + 2;	//for names
@@ -901,12 +870,12 @@ void printOutput(vector<Student> student)
 		cout << '-';
 	cout << "\n";
 	//print the results of all students
-	for (int i = 0; i < student.size(); i++)
+	for (auto const& it : student)
 	{
-		cout << std::setw(setw_surname_lenght) << std::left << student[i].surname;
-		cout << " " << std::setw(setw_name_lenght) << std::left << student[i].name;
-		cout << " " << std::setw(10) << std::left << std::fixed << std::setprecision(2) << student[i].avg_final;
-		cout << " " << std::setw(10) << std::left << std::fixed << std::setprecision(2) << student[i].med_final << "\n";
+		cout << std::setw(setw_surname_lenght) << std::left << it.surname;
+		cout << " " << std::setw(setw_name_lenght) << std::left << it.name;
+		cout << " " << std::setw(10) << std::left << std::fixed << std::setprecision(2) << it.avg_final;
+		cout << " " << std::setw(10) << std::left << std::fixed << std::setprecision(2) << it.med_final << "\n";
 	}
 	cout << "\nJei rezultatai lygus 0, vadinasi ivestis yra bloga.\n";
 }
