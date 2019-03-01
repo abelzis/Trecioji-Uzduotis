@@ -26,7 +26,7 @@ ____________________________________________________________________________
    
    ![Time containers graph](https://i.gyazo.com/23fa3c9a583bc13a6bdb90cbcab5a4f2.png)
    
-   **Išvados**: `std::vector` 95% atveju yra geriausias konteineris. Taškas.
+   **Išvados**: `std::vector` 95% atvejų yra geriausias konteineris. Taškas.
    
 ____________________________________________________________________________
 
