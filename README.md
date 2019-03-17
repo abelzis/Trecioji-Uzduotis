@@ -5,6 +5,20 @@ OOP antroji užduotis. Programa įvestus studentų duomenis apdoroja ir išveda 
 Pasirinktoje IDE sukūrus naują konsolės programą isikelti į projektą parsisiųstus *.h* bei *.cpp* failus ir juos sukompiliuoti. Įvedimo failą galite patys sugeneruoti arba susikurti. *kursiokai.txt* yra pavyzdinis failas. *Second_Task.cpp* yra pagrindinis (main) failas.
 
 # Changelog
+### [v1.0](https://github.com/abelzis/Antroji-Uzduotis/releases/tag/v1.0) (2019-03-17)
+**Pridėta**
+  - Integruota galimybė `functions.h` faile pasirinkt norimą konteinerį 
+  
+  ![Header](https://i.gyazo.com/5a7da138aa69a8d22389d4b75ce531b6.png)
+  
+  - Galimybė rūšiuoti blogesnius studentus rūšiuoti nauju būdu (perkeliant blogai besimokančius studentus iš konteinerio į kitą, o gerus palikti pirmajame konteineryje) ("best-worst2")
+  - Galimybė atlaisvinti atmintį ("del-stud")
+
+**Koreguota**
+  - Pagerintas atsitiktinių skaičių generatorius (tik nuo C++11)
+  - Sumažintas programos atminties naudojimas
+  - Paspartintas programos veikimas
+
 ### [v0.5](https://github.com/abelzis/Antroji-Uzduotis/releases/tag/v0.5) (2019-03-01)
 **Koreguota**
   - Sukurti du atskiri *branches*. Abiejuose atlikti konteinerių pakitimai: viename `std::vector` pakeistas į `std::list`, o kitame `std::vector` pakeistas į `std::deque`.
