@@ -18,6 +18,19 @@ Pasirinktoje IDE sukūrus naują konsolės programą isikelti į projektą parsi
   - Pagerintas atsitiktinių skaičių generatorius (tik nuo C++11)
   - Sumažintas programos atminties naudojimas
   - Paspartintas programos veikimas
+  
+____________________________________________________________________________
+   **Papildoma informacija bei pastebėjimai** **(papildyta: 2019-03-17)**
+   
+   Pagaliau, iš esmės, baigta programa. Nėra tobula, tačiau kriterijus atitinkanti, neblogai veikianti programa (didžiausia likusi klaida yra ta, kad kartais programa negali suskaičiuoti viso laiko). Tačiau laikas įvertinti galutinius pokyčius. Šioje versijoje pridėtas naujas geriausiųjų ir blogiausiųjų studentų atrinkimo būdas: blogiausius studentus iš pagrindinio konteinerio perkelt į naują, o gerus studentus palikt senajame. Taip sutaupoma atminties. Tačiau šis būdas yra optimalus tik `std::list` tipo konteineriams, nes juose naudojamos rodyklės į sekantį ir praeitą saugomą elementą. Vektoriam ir dekam - skausminga, nes pašalinus elementą, reikia iš naujo perskirstyti atmintį.
+   
+   Atrodo, kad taip yra sutaupoma atmintis, tačiau nė velnio. `std::list` naudoja daugiau nei 2 kartus daugiau atminties, nei `std::vector`. O reikalinga atmintis naujiems geriausiųjų ir blogiausiųjų studentų konteineriams sukurti reikalauja nedidelės dalies visos užimamos atminties (tik vardui, pavardei ir rezultatui saugoti). Plius `std::vector` veikia greičiausiai iš visų.
+   
+   Net nelabai buvo prasmės atlikti laiko matavimus. Naują metodą gali įveikti tik `std::list`, nes tik jam ir buvo jis sukurtas (milijoną studentų apdoroja per ~17sec.), o `std::vecto` ir `std::deque` tuos pačius duomenis apdorotų per kelias valandas (nematavau, labai ilgai...).
+   
+   Šiam kartui tiek.
+   
+____________________________________________________________________________
 
 ### [v0.5](https://github.com/abelzis/Antroji-Uzduotis/releases/tag/v0.5) (2019-03-01)
 **Koreguota**
