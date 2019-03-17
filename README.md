@@ -1,5 +1,7 @@
 # Antroji-Uzduotis
-OOP antroji užduotis. Programa įvestus studentų duomenis apdoroja ir išveda galutinius įvertinimus.
+OOP antroji užduotis. Programoje gali būti apdorojami studentų duomenys: vardas, pavardė, namų darbai, egzaminai. Pagrindinė funkcija - apskaičiuoti studentų galutinius rezultatus pagal vidurkio formulę.
+
+Užduoties aprašas: https://github.com/objprog/paskaitos2019/wiki/2-oji-u%C5%BEduotis
 
 # Kaip paleisti programą?
 Pasirinktoje IDE sukūrus naują konsolės programą isikelti į projektą parsisiųstus *.h* bei *.cpp* failus ir juos sukompiliuoti. Įvedimo failą galite patys sugeneruoti arba susikurti. *kursiokai.txt* yra pavyzdinis failas. *Second_Task.cpp* yra pagrindinis (main) failas.
