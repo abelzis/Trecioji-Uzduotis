@@ -7,6 +7,11 @@ Užduoties aprašas: https://github.com/objprog/paskaitos2019/wiki/2-oji-u%C5%BE
 Pasirinktoje IDE sukūrus naują konsolės programą isikelti į projektą parsisiųstus *.h* bei *.cpp* failus ir juos sukompiliuoti. Įvedimo failą galite patys sugeneruoti arba susikurti. *kursiokai.txt* yra pavyzdinis failas. *Second_Task.cpp* yra pagrindinis (main) failas.
 
 # Changelog
+### [v1.0.1](https://github.com/abelzis/Antroji-Uzduotis/releases/tag/v1.0.1) (2019-03-22)
+**Koreguota**
+  - Geriausių-blogiausių studentų išskyrimas dabar greitesnis ir naudoja mažiau atminties visais atvejais (ypač `std::vector` ir `std::deque`).
+  - Kodo aiškumas: UI (User Interface) perkeltas į atskirą failą; UI funkcijos atskirtos; Nereikalingų eilučių pašalinimas; Nereikalingų preprocesoriaus direktyvų pašalinimas;
+
 ### [v1.0](https://github.com/abelzis/Antroji-Uzduotis/releases/tag/v1.0) (2019-03-17)
 **Pridėta**
   - Integruota galimybė `functions.h` faile pasirinkt norimą konteinerį 
