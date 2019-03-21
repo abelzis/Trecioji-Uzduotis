@@ -3,22 +3,14 @@
 
 
 #include "functions.h"
+#include "UI.h"
 
 
 int main()
 {
 	//variables
-#ifdef VECTOR
-	vector<Student> student, cool_stud, lame_stud;	//structure of Student
-#endif
+	StudentContainer student, cool_stud, lame_stud;	//structure of Student
 
-#ifdef LIST
-	list<Student> student, cool_stud, lame_stud;	//structure of Student
-#endif
-
-#ifdef DEQUE
-	deque<Student> student, cool_stud, lame_stud;	//structure of Student
-#endif
 	ifstream file_inp("kursiokai.txt");
 
 	//clock_t clock_file = 0, clock_Cfile = 0, clock_temp = 0;
@@ -30,7 +22,7 @@ int main()
 	instructions();
 
 	//takeInput(student, cool_stud, lame_stud, file_inp, Cstudent_index, Cstudent_size, Cstudent, clock_file, clock_Cfile, clock_temp);
-	takeInput(student, cool_stud, lame_stud, file_inp, clock_file, clock_temp);
+	userInterface(student, cool_stud, lame_stud, file_inp, clock_file, clock_temp);
 
 
 	//begin of 'calculate average and median'

@@ -1,9 +1,9 @@
 #pragma once
 
 
-#define VECTOR
+//#define VECTOR
 //#define LIST
-//#define DEQUE
+#define DEQUE
 
 
 #include <iostream>
@@ -12,7 +12,6 @@
 #include <algorithm>	//std::sort
 #include <random>	//random device
 #include <fstream>
-#include <Windows.h>	//time
 #include <chrono>	//hr clock
 
 //begin of 'VECTOR include'
@@ -64,70 +63,47 @@ struct Student {
 	double avg_final, med_final;	//average of final mark and median of final mark
 };
 
-
+#ifdef VECTOR
+typedef vector<Student> StudentContainer;
+typedef vector<int> intContainer;
+#endif
+#ifdef LIST
+typedef list<Student> StudentContainer;
+typedef list<int> intContainer;
+#endif
+#ifdef DEQUE
+typedef deque<Student> StudentContainer;
+typedef deque<int> intContainer;
+#endif
 
 
 //function declarations:
-void instructions();
 void openFile(ifstream& file, const string name);
 void openFile(ifstream& file);
 void generateFile(ofstream& file, const int count);
 bool checkIfStrIsNum(const string str);
 
+void getInput(StudentContainer &student);
+void readFromFile(ifstream& kursiokai, StudentContainer &student);
+void sortBestWorst(const StudentContainer& student, StudentContainer& cool, StudentContainer& lame);
+StudentContainer sortBestWorst2(StudentContainer& student);
+void writeToFileBestWorst(const string ofstreamName_temp, const StudentContainer& cool, const StudentContainer& lame);
+void deleteStudentContainer(StudentContainer& v);
 
-//begin of 'VECTOR functions'
 #ifdef VECTOR
-void takeInput(vector<Student>& student, vector<Student>& cool_stud, vector<Student>& lame_stud,
-	ifstream& file_inp,
-	durationDouble& clock_file, tmPt& clock_temp);
-
-void getInput(vector<Student> &student);
-void readFromFile(ifstream& kursiokai, vector<Student> &student);
-void sortBestWorst(const vector<Student>& student, vector<Student>& cool, vector<Student>& lame);
-void sortBestWorst2(vector<Student>& student, vector<Student>& lame);
-void writeToFileBestWorst(const string ofstreamName_temp, const vector<Student>& cool, const vector<Student>& lame);
-void deleteStudentVector(vector<Student>& v);
 double avgCalc(vector<int> hw, int egz);
 double medCalc(vector<int> hw, int egz);
-void printOutput(vector<Student>& student);
 #endif
-//end of 'VECTOR functions'
 
-
-//begin of 'LIST functions'
 #ifdef LIST
-void takeInput(list<Student>& student, list<Student>& cool_stud, list<Student>& lame_stud,
-	ifstream& file_inp,
-	durationDouble& clock_file, tmPt& clock_temp);
-
-void getInput(list<Student> &student);
-void readFromFile(ifstream& kursiokai, list<Student> &student);
-void sortBestWorst(const list<Student>& student, list<Student>& cool, list<Student>& lame);
-void sortBestWorst2(list<Student>& student, list<Student>& lame);
-void writeToFileBestWorst(const string ofstreamName_temp, const list<Student>& cool, const list<Student>& lame);
-void deleteStudentVector(list<Student>& v);
 double avgCalc(list<int> hw, int egz);
 double medCalc(list<int> hw, int egz);
-void printOutput(list<Student>& student);
 #endif
-//end of 'LIST functions'
 
-
-//begin of 'DEQUE functions'
 #ifdef DEQUE
-void takeInput(deque<Student>& student, deque<Student>& cool_stud, deque<Student>& lame_stud,
-	ifstream& file_inp,
-	durationDouble& clock_file, tmPt& clock_temp);
-
-void getInput(deque<Student> &student);
-void readFromFile(ifstream& kursiokai, deque<Student> &student);
-void sortBestWorst(const deque<Student>& student, deque<Student>& cool, deque<Student>& lame);
-void sortBestWorst2(deque<Student>& student, deque<Student>& lame);
-void writeToFileBestWorst(const string ofstreamName_temp, const deque<Student>& cool, const deque<Student>& lame);
-void deleteStudentVector(deque<Student>& v);
 double avgCalc(deque<int> hw, int egz);
 double medCalc(deque<int> hw, int egz);
-void printOutput(deque<Student>& student);
 #endif
-//end of 'DEQUE functions'
+
+void printOutput(StudentContainer& student);
 
