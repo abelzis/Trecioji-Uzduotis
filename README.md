@@ -4,7 +4,11 @@ OOP antroji užduotis. Programoje gali būti apdorojami studentų duomenys: vard
 Užduoties aprašas: https://github.com/objprog/paskaitos2019/wiki/2-oji-u%C5%BEduotis
 
 # Kaip paleisti programą?
-Pasirinktoje IDE sukūrus naują konsolės programą isikelti į projektą parsisiųstus *.h* bei *.cpp* failus ir juos sukompiliuoti. Įvedimo failą galite patys sugeneruoti arba susikurti. *kursiokai.txt* yra pavyzdinis failas. *Second_Task.cpp* yra pagrindinis (main) failas.
+1. Parsisiųsti visus failus
+2. CMake programoje pasirinkti *source path* ten, kur parsisuntėte failus
+3. Pasirinkite, kur kursite projektą ( *build binaries* )
+4. Spausti *Configure*, pasirinkti IDE/compileri ir tada *Generate*
+5. Sukompiliuoti ir paleisti programą
 
 # Changelog
 ### [v1.0.1a](https://github.com/abelzis/Antroji-Uzduotis/releases/tag/v1.0.1a) (2019-03-22)
