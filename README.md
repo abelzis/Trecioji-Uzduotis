@@ -1,7 +1,11 @@
-# Antroji-Uzduotis
-OOP antroji užduotis. Programoje gali būti apdorojami studentų duomenys: vardas, pavardė, namų darbai, egzaminai. Pagrindinė funkcija - apskaičiuoti studentų galutinius rezultatus pagal vidurkio formulę.
+# Trečioji Užduotis
+OOP antrosios užduoties atnaujinimas - trečioji užduotis. Programoje gali būti apdorojami studentų duomenys: vardas, pavardė, namų darbai, egzaminai. Pagrindinė funkcija - apskaičiuoti studentų galutinius rezultatus pagal vidurkio formulę.
 
-Užduoties aprašas: https://github.com/objprog/paskaitos2019/wiki/2-oji-u%C5%BEduotis
+Pagrindinis skirtumas tarp antros ir trečios - objektiškai orientuotas programavimas.
+
+[Antroji Užduotis](https://github.com/abelzis/Antroji-Uzduotis)
+
+[Užduoties aprašas](https://github.com/objprog/paskaitos2019/wiki/3-oji-u%C5%BEduotis)
 
 # Kaip paleisti programą?
 1. Parsisiųsti visus failus
