@@ -8,11 +8,7 @@ Pagrindinis skirtumas tarp antros ir trečios - objektiškai orientuotas program
 [Užduoties aprašas](https://github.com/objprog/paskaitos2019/wiki/3-oji-u%C5%BEduotis)
 
 # Kaip paleisti programą?
-1. Parsisiųsti visus failus
-2. CMake programoje pasirinkti *source path* ten, kur parsisuntėte failus
-3. Pasirinkite, kur kursite projektą ( *build binaries* )
-4. Spausti *Configure*, pasirinkti IDE/compileri ir tada *Generate*
-5. Sukompiliuoti ir paleisti programą
+Naudojant CMake sukurti projektą, tada galima sukompiliuot mėgstamu kompaileriu ar IDE, taip pat makefile.
 
 # Changelog
 ### [v1.0.1a](https://github.com/abelzis/Antroji-Uzduotis/releases/tag/v1.0.1a) (2019-03-22)
