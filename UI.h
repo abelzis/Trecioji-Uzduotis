@@ -1,25 +1,37 @@
 #pragma once
 
 #include "functions.h"
+#include "timerClass.h"
+
 
 
 //functions
+void UI_startGuide(StudentContainer& student, StudentContainer& cool_stud, StudentContainer& lame_stud,
+	ifstream& file_inp);
 
-void userInterface(StudentContainer& student, StudentContainer& cool_stud, StudentContainer& lame_stud,
-	ifstream& file_inp,
-	durationDouble& clock_file, tmPt& clock_temp);
+void UI_filesGuide(StudentContainer& student, StudentContainer& cool_stud, StudentContainer& lame_stud,
+	ifstream& file_inp);
 
-void instructions();
+void UI_manualGuide(StudentContainer& student, StudentContainer& cool_stud, StudentContainer& lame_stud,
+	ifstream& file_inp);
+
+void UI_main(StudentContainer& student, StudentContainer& cool_stud, StudentContainer& lame_stud,
+	ifstream& file_inp);
+
+void beginText();
+void instructionSetForFilesGuide();
+void instructionSetForManualGuide();
+void instructionSetForDataGuide();
+void commands();
 void UI_Open(string& ifstreamName, ifstream& file_inp);
-void UI_GenerateFile(string& ofstreamName, durationDouble& clock_file, tmPt& clock_temp);
-void UI_File(ifstream& file_inp, StudentContainer& student, durationDouble& clock_file, tmPt& clock_temp);
-void UI_Avg(StudentContainer& student, durationDouble& clock_file, tmPt& clock_temp);
-void UI_Med(StudentContainer& student, durationDouble& clock_file, tmPt& clock_temp);
+void UI_GenerateFile(string& ofstreamName);
+void UI_File(ifstream& file_inp, StudentContainer& student);
+void UI_Avg(StudentContainer& student);
+void UI_Med(StudentContainer& student);
 
 void UI_BestWorst(StudentContainer& student, StudentContainer& cool_stud, StudentContainer& lame_stud,
-	durationDouble& clock_file, tmPt& clock_temp, int version = 2);
+	int version = 2);
 
-void UI_BestWorstFile(StudentContainer& student, StudentContainer& cool_stud, StudentContainer& lame_stud, string& ifstreamName,
-	durationDouble& clock_file, tmPt& clock_temp);
+void UI_BestWorstToFile(StudentContainer& student, StudentContainer& cool_stud, StudentContainer& lame_stud);
 
 void UI_Del(StudentContainer& st);

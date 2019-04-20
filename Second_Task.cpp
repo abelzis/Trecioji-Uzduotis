@@ -4,6 +4,7 @@
 
 #include "functions.h"
 #include "UI.h"
+#include "timerClass.h"
 
 
 int main()
@@ -11,56 +12,13 @@ int main()
 	//variables
 	StudentContainer student, cool_stud, lame_stud;	//structure of Student
 
-	ifstream file_inp("kursiokai.txt");
+	ifstream file_inp;
 
-	//clock_t clock_file = 0, clock_Cfile = 0, clock_temp = 0;
+	Timer timer;
 
-	tmPt clock_temp;
-	durationDouble clock_file;
+	UI_startGuide(student, cool_stud, lame_stud, file_inp);
 
-
-	instructions();
-
-	//takeInput(student, cool_stud, lame_stud, file_inp, Cstudent_index, Cstudent_size, Cstudent, clock_file, clock_Cfile, clock_temp);
-	userInterface(student, cool_stud, lame_stud, file_inp, clock_file, clock_temp);
-
-
-	//begin of 'calculate average and median'
-	if (student.size() > 0)
-	{
-		//begin of 'if not list'
-#ifndef LIST
-		if (!student[student.size() - 1].avg_final)	//if last's student's average is not defined
-		{
-			clock_temp = hrClock::now();	//begin time
-			for (int i = 0; i < student.size(); i++)
-			{
-				student[i].avg_final = avgCalc(student[i].hw, student[i].egz);	//calculate average
-				student[i].med_final = medCalc(student[i].hw, student[i].egz);	//calculate median
-			}
-			clock_file += durationDouble(hrClock::now() - clock_temp);
-		}
-#endif
-		//end of 'if not list'
-
-		//begin of 'if list'
-#ifdef LIST
-		for (auto& it : student)	//assign auto iterator to it variable through list student
-		{
-			//auto it = std::next(student.begin(), i);
-			it.avg_final = avgCalc(it.hw, it.egz);	//calculate average
-			it.med_final = avgCalc(it.hw, it.egz);	//calculate median
-		}
-		clock_file += durationDouble(hrClock::now() - clock_temp);
-#endif
-		//end of 'if list'
-	}
-	//end of 'calculate average and median'
-
-	//print results
-	cout << "-------------RESULTS OF student---------------\n\n";
-	//printOutput(student);	//print results of student
-	cout << "TOTAL USEFUL TIME TAKEN: " << std::setprecision(10) << clock_file.count() << "s\n";
+	cout << "TOTAL TIME TAKEN: " << std::setprecision(10) << timer.elapsed() << "s\n";
 
 	system("pause");	//pause
 }

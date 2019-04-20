@@ -1,0 +1,14 @@
+﻿  Second_Task.cpp
+  UI.cpp
+  functions.cpp
+c:\users\abelz\onedrive\desktop\vu mif isis\objektinis\second_task\second_task\functions.cpp(57): warning C4018: '<': signed/unsigned mismatch
+c:\users\abelz\onedrive\desktop\vu mif isis\objektinis\second_task\second_task\functions.cpp(181): warning C4018: '>=': signed/unsigned mismatch
+c:\users\abelz\onedrive\desktop\vu mif isis\objektinis\second_task\second_task\functions.cpp(581): warning C4018: '<': signed/unsigned mismatch
+c:\users\abelz\onedrive\desktop\vu mif isis\objektinis\second_task\second_task\functions.cpp(594): warning C4018: '>': signed/unsigned mismatch
+c:\users\abelz\onedrive\desktop\vu mif isis\objektinis\second_task\second_task\functions.cpp(605): warning C4018: '>': signed/unsigned mismatch
+  studentClass.cpp
+c:\users\abelz\onedrive\desktop\vu mif isis\objektinis\second_task\second_task\studentclass.cpp(46): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\users\abelz\onedrive\desktop\vu mif isis\objektinis\second_task\second_task\studentclass.cpp(76): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  Generating Code...
+c:\users\abelz\onedrive\desktop\vu mif isis\objektinis\second_task\second_task\functions.cpp(248): warning C4715: 'getExam': not all control paths return a value
+  Second_Task.vcxproj -> C:\Users\abelz\OneDrive\Desktop\VU MIF ISIS\Objektinis\Second_Task\Debug\Second_Task.exe

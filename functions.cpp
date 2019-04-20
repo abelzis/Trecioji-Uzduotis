@@ -1,6 +1,7 @@
 #include "functions.h"
 
 
+
 //opens ifstream file specified with name
 void openFile(ifstream& file, const string name)
 {
@@ -64,102 +65,109 @@ bool checkIfStrIsNum(const string str)
 
 
 //function gets input and stores to student array
-void getInput(StudentContainer &student)
+Student getLocalInput()
 {
-	student.push_back(Student());	//push back structure array
-	int count = student.size() - 1;	//get count of student
-	cout << "STUDENT SIZE: " << student.size() << "\n";
+	//student.push_back(Student());	//push back structure array
+	//int count = student.size() - 1;	//get count of student
 
-	for (auto it = student.begin(); it != student.end(); ++it)
+	Student temp_stud;
+
+	//get name
+	cout << "Iveskite studento varda: ";
+	string name;
+	dollarSign();
+	cin >> name;
+	temp_stud.setName(name);
+
+	//get surname
+	cout << "Iveskite studento pavarde: ";
+	string surname;
+	dollarSign();
+	cin >> surname;
+	temp_stud.setName(surname);
+
+
+	//begin of 'input homework'
+	cout << "Dabar veskite namu darbu rezultatus (minimali verte 1, maksimali 10).\n";
+	cout << "Atsitiktiniam namu darbu ir egzaminu rezultatu sugeneravimui, rasykite \"rand\".\n";
+	cout << "Kai baigsite, iveskite \"egz\": ";
+	string temp_input;
+
+	intContainer hw;
+	while (temp_input != "egz")
 	{
-		it++;
-		if (it == student.end())	//if final student is reached
+		dollarSign();
+		cin >> temp_input;
+
+		//break if input is 'egz'
+		if (temp_input == "egz")
+			break;
+
+		//begin of 'randomize homework results'
+		if (temp_input == "rand")
 		{
-			it--;
-
-			//get name
-			cout << "Iveskite studento varda: ";
-			cin >> it->name;
-
-			//get surname
-			cout << "Iveskite studento pavarde: ";
-			cin >> it->surname;
-
-
-			//begin of 'input homework'
-			cout << "Dabar veskite namu darbu rezultatus (minimali verte 1, maksimali 10).\n";
-			cout << "Atsitiktiniam namu darbu ir egzaminu rezultatu sugeneravimui, rasykite \"rand\".\n";
-			cout << "Kai baigsite, iveskite \"egz\": ";
-			string temp_input;
-			while (temp_input != "egz")
+			int max_rand = 20;	//20 is maximum amount of homework currently
+			//begin of 'rand error message'
+			//if homework amount is 20 or more, don't randomize
+			if (max_rand - hw.size() < 1)
 			{
-				cin >> temp_input;
-
-				//break if input is 'egz'
-				if (temp_input == "egz")
-					break;
-
-				//begin of 'randomize homework results'
-				if (temp_input == "rand")
-				{
-					int max_rand = 20;	//20 is maximum amount of homework currently
-					//begin of 'rand error message'
-					//if homework amount is 20 or more, don't randomize
-					if (max_rand - it->hw.size() < 1)
-					{
-						cout << "Negeneruojama, kai yra virs " << max_rand << " namu darbu.";
-						continue;
-					}
-					//end of 'rand error message'
-
-					int rand_hw_num = rand() % (max_rand - it->hw.size());	//get random homework amount
-
-					//set randomized marks to homeworks and then exam
-					for (int i = 0; i < rand_hw_num; i++)
-						it->hw.push_back(1 + rand() % 10);	//randomize between 1 and 10
-					it->egz = 1 + rand() % 10;	//randomize exam
-
-					return;
-				}
-				//end of 'randomize homework results'
-
-				//get mark input
-				if (temp_input == "1" || temp_input == "2" || temp_input == "3" || temp_input == "4" || temp_input == "5" || temp_input == "6"
-					|| temp_input == "7" || temp_input == "8" || temp_input == "9" || temp_input == "10")//if the input is between 1 and 10 inclusive
-					it->hw.push_back(std::stoi(temp_input));	//add to hw array
-				//if invalid character is inputed throw error message
-				else
-				{
-					student.pop_back();	//delete the invalid object
-					throw "Invalid character(s). Expected numbers between 1 and 10.";
-				}
+				cout << "Negeneruojama, kai yra virs " << max_rand << " namu darbu.";
+				continue;
 			}
+			//end of 'rand error message'
+
+			int rand_hw_num = rand() % (max_rand - hw.size());	//get random homework amount
+
+			//set randomized marks to homeworks and then exam
+			for (int i = 0; i < rand_hw_num; i++)
+				hw.push_back(1 + rand() % 10);	//randomize between 1 and 10
+
+			temp_stud.setHomework(hw);
+			temp_stud.setExam(1 + rand() % 10);	//randomize exam
+
+			return temp_stud;
+		}
+		//end of 'randomize homework results'
+
+		//get mark input
+		if (temp_input == "1" || temp_input == "2" || temp_input == "3" || temp_input == "4" || temp_input == "5" || temp_input == "6"
+			|| temp_input == "7" || temp_input == "8" || temp_input == "9" || temp_input == "10")//if the input is between 1 and 10 inclusive
+			hw.push_back(std::stoi(temp_input));	//add to hw array
+		//if invalid character is inputed throw error message
+		else
+		{
+			cout << "Invalid character(s). Expected numbers between 1 and 10.\n";
+			continue;
+		}
+		temp_stud.setHomework(hw);
+	}
 
 #ifndef LIST
-			it->hw.shrink_to_fit();
+	hw.shrink_to_fit();
 #endif
-			//end of 'input homework'
+	//end of 'input homework'
 
-			//begin of 'input of exam'
-			cout << "Iveskite egzamino rezultata (nuo 1 iki 10): ";
-			while (1)
-			{
-				cin >> temp_input;
-				if (temp_input == "1" || temp_input == "2" || temp_input == "3" || temp_input == "4" || temp_input == "5" || temp_input == "6"
-					|| temp_input == "7" || temp_input == "8" || temp_input == "9" || temp_input == "10")//if the input is between 1 and 10 inclusive
-					break;
-				cout << "Klaida. Neteisingas egzamino rezultato formatas. Iveskite egzamino rezultata (nuo 1 iki 10): ";
-			}
-
-			if (temp_input != "10")
-				it->egz = std::stoi(temp_input);
-			else
-				it->egz = 10;
-			//end of 'input of exam'
-		}
-		else
-			it--;
+	//begin of 'input of exam'
+	cout << "Iveskite egzamino rezultata (nuo 1 iki 10): ";
+	while (1)
+	{
+		dollarSign();
+		cin >> temp_input;
+		if (temp_input == "1" || temp_input == "2" || temp_input == "3" || temp_input == "4" || temp_input == "5" || temp_input == "6"
+			|| temp_input == "7" || temp_input == "8" || temp_input == "9" || temp_input == "10")//if the input is between 1 and 10 inclusive
+			break;
+		cout << "Klaida. Neteisingas egzamino rezultato formatas. Iveskite egzamino rezultata (nuo 1 iki 10): ";
 	}
+
+	if (temp_input != "10")
+		temp_stud.setExam(std::stoi(temp_input));
+	else
+		temp_stud.setExam(10);
+	//end of 'input of exam'
+
+	cout << "\nStudentas sekmingai ivestas!\n";
+
+	return temp_stud;
 }
 
 
@@ -264,21 +272,26 @@ void readFromFile(ifstream& file, StudentContainer &student)
 			//begin of 'character scan from file_str'
 			//begin of 'get name'
 			int str_index = getUntilWhitespace(file_str);	//returns (name) character count of a single word substring
-			temp_stud.name.append(file_str, 0, str_index);	//append name to structure
+			string temp_name;
+			temp_name.append(file_str, 0, str_index);
+			temp_stud.setName(temp_name);
 			file_str.erase(0, str_index + 1);	//delete name from temporary file_str string
 			//end of 'get name'
 
 			//begin of 'get surname'
 			str_index = getUntilWhitespace(file_str);	//returns (surname) character count of a single word substring
-			temp_stud.surname.append(file_str, 0, str_index);	//append surname to structure
+			temp_name.clear();
+			temp_name.append(file_str, 0, str_index);
+			temp_stud.setSurname(temp_name);
 			file_str.erase(0, str_index + 1);	//delete name from temporary file_str string
 			//end of 'get surname'
 
 			//get value of the exam
-			temp_stud.egz = getExam(file_str);
+			temp_stud.setExam(getExam(file_str));
 
 			//begin of 'get homework'
 			str_index = 0;	//reset index
+			intContainer hw;	//create temporary homework array
 			while (file_str.length() > 0)	//search for homework results between whitespaces
 			{
 				//begin of 'if digit found'
@@ -288,7 +301,7 @@ void readFromFile(ifstream& file, StudentContainer &student)
 					if (file_str[str_index] != '1' && file_str[str_index] != '0')	//if found any digit but '1'
 					{
 						if (file_str[str_index + 1] == ' ' || file_str[str_index + 1] == '.' || file_str.length() == 1)	//if the digit is followed by whitespace or found last character
-							temp_stud.hw.push_back(file_str[str_index] - '0');	//push back into student homework the mark
+							hw.push_back(file_str[str_index] - '0');	//push back into student homework the mark
 						//else means there's junk we should erase
 						else
 							while (file_str[str_index] != ' ' && file_str.length() > 0)
@@ -300,11 +313,11 @@ void readFromFile(ifstream& file, StudentContainer &student)
 					if (file_str[str_index] == '1')	//if found '1'
 					{
 						if (file_str[str_index + 1] == ' ')	//if 1 is followed by whitespace
-							temp_stud.hw.push_back(1);	//push back 1
+							hw.push_back(1);	//push back 1
 						else if (file_str[str_index + 1] == '0')	//if 1 is followed by 0
 						{
 							if (file_str[str_index + 2] == ' ' || file_str.length() == 2)	//if 10 is followed by whitespace or found last 2 characters
-								temp_stud.hw.push_back(10);	//push back 10
+								hw.push_back(10);	//push back 10
 						}
 						//else means there's junk we should erase
 						else
@@ -349,8 +362,12 @@ void readFromFile(ifstream& file, StudentContainer &student)
 			//end of 'character scan from file_str'
 
 #ifndef LIST
-			temp_stud.hw.shrink_to_fit();
+			hw.shrink_to_fit();
 #endif
+
+			temp_stud.setHomework(hw);
+			hw.clear();
+
 			student.push_back(Student(temp_stud));	//push back
 		}
 		//end of 'read from kursiokai'
@@ -358,96 +375,16 @@ void readFromFile(ifstream& file, StudentContainer &student)
 	//end of 'if file open'
 	//begin of 'if file is not open'
 	else
-		throw "Klaida: neimanoma atidaryti failo.\n";
+		throw "Klaida: neimanoma atidaryti failo arba failas neatidarytas.\n";
 	//end of 'if file is not open'
 
 }
 
 
-//function returns the avarage value of the vector array
-double avgCalc(intContainer hw, const int egz)
-{
-	//calculate the sum of array and return the average
-	int sum = 0;
-	for (auto const& i : hw)
-		sum += i;
 
-	if (hw.size() != 0)	//skip division by 0
-	{
-		double avg = 0.4*(double)((double)sum / (double)hw.size()) + 0.6*egz;
-		if (avg < 0 || avg > 10)
-			return 0;
-		return avg;
-	}
-	if (hw.size() == 0 && egz >= 1 && egz <= 10)	//if no homeworks are done, but atleast exam is passed
-		return egz;
-	return 0;
-}
-
-
-//function returns the median value of the vector array
-double medCalc(intContainer hw, const int egz)
-{
-	//we need to sort the array in ascending order
-#ifndef LIST
-	std::sort(hw.begin(), hw.end());
-
-	int sz = hw.size() / 2;
-	int *it = &sz;
-#endif
-
-#ifdef LIST
-	hw.sort();
-
-	std::list<int>::iterator it = hw.begin();
-	std::advance(it, std::distance(hw.begin(), hw.end()) / 2);
-#endif
-
-	//if odd
-	if (hw.size() % 2 == 1)
-	{
-		//double med = 0.4*(double)hw[hw.size() / 2] + 0.6*egz;
-		double med = 0.4*(double)(*it) + 0.6*egz;
-		if (med < 0 || med > 10)
-			return 0;
-		return med;
-	}
-
-	//if even
-	if (hw.size() % 2 == 0)
-	{
-		if (hw.size() != 0)	//skip division by 0
-		{
-			//double med = 0.4*((1.0*hw[hw.size() / 2 - 1] + 1.0*hw[hw.size() / 2]) / 2) + 0.6*egz;
-			double med = 0.4*((1.0*(*(--it)) + 1.0*(*(++it))) / 2) + 0.6*egz;
-			if (med < 0 || med > 10)
-				return 0;
-			return med;
-		}
-		if (hw.size() == 0 && egz >= 1 && egz <= 10)	//if no homeworks are done, but atleast exam is passed
-			return egz;
-		return 0;
-	}
-
-
-	return 0;
-}
-
-//return temporary student with values copied 
-Student assignTemporaryValues(const Student& it)
-{
-	Student temp;	
-
-	temp.name = it.name;
-	temp.surname = it.surname;
-	temp.avg_final = it.avg_final;
-	temp.med_final = it.med_final;
-
-	return temp;
-}
 
 //function picks students with higher or equal average final mark than 5 and puts them into 'cool' vector, otherwise in the 'loser' vector
-void sortBestWorst(const StudentContainer& student, StudentContainer& cool, StudentContainer& lame)
+void sortBestWorst(StudentContainer& student, StudentContainer& cool, StudentContainer& lame)
 {
 	if (student.size() == 0)
 		throw "Error: main vector size is 0.";
@@ -460,13 +397,22 @@ void sortBestWorst(const StudentContainer& student, StudentContainer& cool, Stud
 	//invariant: fill cool student container with high mark students, lame student container with low mark students
 	for (auto & it : student)
 	{
-		if (it.avg_final >= 5 && it.avg_final <= 10)	//if avg is not lower than 5, the student is considered cool
+		//define final mark using criteria
+#ifdef AVERAGE
+		it.setFinalMark(it.average());	//set final mark to be average
+#endif
+
+#ifdef MEDIAN
+		it.setFinalMark(it.median());	//set final mark to be average
+#endif
+
+		if (it.finalMark() >= 5 && it.finalMark() <= 10)	//if avg is not lower than 5, the student is considered cool
 		{
-			cool.push_back(assignTemporaryValues(it));
+			cool.push_back(it.copy(it));
 			continue;
 		}
-		if (it.avg_final > 0 && it.avg_final < 5)	//if avg is lower than 5, the student is considered loser
-			lame.push_back(assignTemporaryValues(it));
+		if (it.finalMark() > 0 && it.finalMark() < 5 + 0.005)	//if avg is lower than 5, the student is considered loser
+			lame.push_back(it.copy(it));
 	}
 	//shrink to fit (save memory)
 #ifndef LIST
@@ -478,7 +424,7 @@ void sortBestWorst(const StudentContainer& student, StudentContainer& cool, Stud
 //predicate returns true if student pass
 bool passedClass(const Student& student)
 {
-	if (student.avg_final >= 5)
+	if (student.finalMark() >= 5)
 		return true;
 	return false;
 }
@@ -492,7 +438,7 @@ bool failedClass(const Student& student)
 //predicate returns true if student is invalid
 bool invalidStudent(const Student& student)
 {
-	if (student.avg_final == 0)
+	if (student.finalMark() == 0)
 		return true;
 	return false;
 }
@@ -502,10 +448,14 @@ Student assignTemporaryValues(const StudentContainer::iterator& it)
 {
 	Student temp;	//temporary object
 
-	temp.name = it->name;
-	temp.surname = it->surname;
-	temp.avg_final = it->avg_final;
-	temp.med_final = it->med_final;
+	//temp.copy(*it);
+	temp.setName(it->name());
+	temp.setSurname(it->surname());
+	temp.setAverage(it->average());
+	temp.setMedian(it->median());
+	temp.setExam(it->exam());
+	temp.setMedian(it->median());
+	temp.setFinalMark(it->finalMark());
 
 	return temp;
 }
@@ -516,15 +466,13 @@ StudentContainer sortBestWorst2(StudentContainer& student)
 	if (student.size() == 0)
 		throw "Error: main container size is 0.";
 
-	//reserve capacity trying to avoid size reallocation for vector type
-
-	//cout << sizeof(student) << "\n";
 
 #ifndef LIST
+	//use stable partition to sort students who pass at the begin of the list
 	StudentContainer::iterator it = std::stable_partition(student.begin(), student.end(), passedClass);
 
 	StudentContainer lame1(it, student.end());
-	student.erase(it, student.end());
+	student.erase(it, student.end()); 
 	student.shrink_to_fit();
 
 	it = std::stable_partition(lame1.begin(), lame1.end(), invalidStudent);
@@ -535,13 +483,14 @@ StudentContainer sortBestWorst2(StudentContainer& student)
 
 #ifdef LIST
 	StudentContainer lame;
-	auto it = student.begin();
+	//auto it = student.begin();
+	StudentContainer::iterator it = student.begin();
 	//for (auto & it : student)
 	for (it; it != student.end(); ++it)
 	{
-		if (it->avg_final >= 0 && it->avg_final < 5)	//if avg is lower than 5, the student is considered loser
+		if (it->finalMark() >= 0 && it->finalMark() + 0.005 < 5)	//if avg is lower than 5, the student is considered loser
 		{
-			if (it->avg_final != 0)
+			if (it->finalMark() != 0)
 				lame.push_back(assignTemporaryValues(it));	//pushback copy of iterator's values
 
 			it = student.erase(it);
@@ -556,7 +505,9 @@ StudentContainer sortBestWorst2(StudentContainer& student)
 void writeToFile(ofstream& file, const StudentContainer& st)
 {
 	for (auto const& it : st)
-		file << it.name << " " << it.surname << " " << std::fixed << std::setprecision(2) << it.avg_final << "\n";	//output data of cool students
+	{
+		file << it.name() << " " << it.surname() << " " << std::fixed << std::setprecision(2) << it.finalMark() << "\n";	//output data of cool students
+	}
 }
 
 //function write best students to one file, and lame students to another file
@@ -601,18 +552,10 @@ void deleteStudentContainer(StudentContainer& v)
 {
 	//delete homework vectors
 	for (auto& elem : v)
-	{
-		elem.hw.clear();
-		elem.hw.resize(0);
-#ifndef LIST
-		elem.hw.shrink_to_fit();
-#endif
-		if (!elem.hw.empty())
-			throw "Error: homework array could not have been deleted.";
-	}
+		elem.clear();
+
 	//delete student object vector
 	v.clear();
-	v.resize(0);
 #ifndef LIST
 	v.shrink_to_fit();
 #endif
@@ -625,13 +568,13 @@ void deleteStudentContainer(StudentContainer& v)
 bool compareNames(Student &a, Student &b)
 {
 	//compare by name
-	if (a.name.size() < b.name.size())
-		for (int i = 0; i < a.name.size(); i++)
-			if (a.name[i] != b.name[i])
-				return b.name[i] > a.name[i];
+	if (a.name().size() < b.name().size())
+		for (int i = 0; i < a.name().size(); i++)
+			if (a.name()[i] != b.name()[i])
+				return b.name()[i] > a.name()[i];
 
 	//else
-	return b.name[0] > a.name[0];
+	return b.name()[0] > a.name()[0];
 }
 
 //returns required setw amount for names
@@ -639,8 +582,8 @@ int longestName(StudentContainer student)
 {
 	int longest = 0;
 	for (auto const& it : student)
-		if (it.name.length() > longest)
-			longest = it.name.length();
+		if (it.name().length() > longest)
+			longest = it.name().length();
 	return longest;
 }
 
@@ -650,8 +593,8 @@ int longestSurname(StudentContainer student)
 {
 	int longest = 0;
 	for (auto const& it : student)
-		if (it.surname.length() > longest)
-			longest = it.surname.length();
+		if (it.surname().length() > longest)
+			longest = it.surname().length();
 	return longest;
 }
 
@@ -685,10 +628,10 @@ void printOutput(StudentContainer& student)
 	//print the results of all students
 	for (auto const& it : student)
 	{
-		cout << std::setw(setw_surname_lenght) << std::left << it.surname;
-		cout << " " << std::setw(setw_name_lenght) << std::left << it.name;
-		cout << " " << std::setw(10) << std::left << std::fixed << std::setprecision(2) << it.avg_final;
-		cout << " " << std::setw(10) << std::left << std::fixed << std::setprecision(2) << it.med_final << "\n";
+		cout << std::setw(setw_surname_lenght) << std::left << it.surname();
+		cout << " " << std::setw(setw_name_lenght) << std::left << it.name();
+		cout << " " << std::setw(10) << std::left << std::fixed << std::setprecision(2) << it.average();
+		cout << " " << std::setw(10) << std::left << std::fixed << std::setprecision(2) << it.median() << "\n";
 	}
 	cout << "\nJei rezultatai lygus 0, vadinasi ivestis yra bloga.\n";
 }
