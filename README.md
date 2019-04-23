@@ -25,6 +25,18 @@ Naudojant CMake sukurti projektą, tada galima sukompiliuot mėgstamu kompaileri
   - Sutaisyta klaida retkarčiais studentus su 5.00 vidurkiu priskyrus prie *lame*
   
   
+____________________________________________________________________________
+  **Papildoma informacija bei pastebėjimai** **(papildyta: 2019-04-23)**
+  
+  Pagaliau pradėjom mokytis šiek tiek objektinio, o ne procedūrinio. Tad teko atlikti šiek tiek pakeitimų pereinant iš struktūros į klasę. Tačiau programos esmė nepasikeitė. Šioje versijoje tenka atlikti palyginimus tarp klasės ir struktūros. Funkcijos iš esmės nekito, keitėsi pagrinde tik jų apvalkalas (UI). Tikrinam spartą tarp `v1.0.1a` ir `v1.1`: po 10 matavimų, tie patys milijonas studentų duomenų. Optimizacijos flagai: `/Od`, `/O1`, `/O2`. **Rezultatai:**
+  
+  ![Speed before and after classes](https://i.gyazo.com/a0c160e0915c80563a66965d4d551ebe.png)
+  
+  Matosi, kad struktūros pasirodė šiek tiek geriau (mažesni stulpeliai - geriau). Greičiausiai, dėl platesnės įvairovės: konstruktorių ne 1, o 3, member kintamųjų pasiekiamumas - per funkcijų abstrakciją, `inline` funkcijų išlošiama (pralošiama) nauda, vidinės funkcijos. Po tokiais mažais kasneliais ir yra jaučiamas tas ~5-10% spartos skirtumas matomas grafike. **Išvados:** patogumas, development greitis ir grožis reikalauja aukų.
+   
+____________________________________________________________________________
+   
+  
 ### [v1.0.1a](https://github.com/abelzis/Antroji-Uzduotis/releases/tag/v1.0.1a) (2019-03-22)
 **Pridėta**
   - CMake failas
