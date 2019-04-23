@@ -65,14 +65,15 @@ private:
 	static int student_count_;
 
 	//private funcions
-	double avgCalc();
-	double medCalc();
-	void sortHw();
-	void sortHw(bool ascendingOrder);
+	double avgCalc_();
+	double medCalc_();
+	void sortHw_();
+	void sortHw_(bool ascendingOrder);
+	inline void dollarSign_() { cout << " $ "; }
 
 public:	//interface
 	//constructors
-	Student() : exam_(0), average_(0), median_(0), final_mark_(0) { student_count_++; }
+	Student() : exam_(0), average_(0), median_(0), final_mark_(0), name_(""), surname_("") { student_count_++; }	//default
 	Student(string name, string surname) : name_(name), surname_(surname), exam_(0), average_(0), median_(0), final_mark_(0) { student_count_++; }
 
 	//get'er functions
@@ -100,11 +101,32 @@ public:	//interface
 	double medianCalc(); //function calculates the median
 	void clear();	//reset values to NULL
 	void print();	//print information about the student
-	inline void homeworkSort() { return sortHw(); }	//sort homework in ascending order
-	inline void homeworkSort(const bool& ascendingOrder) { return sortHw(ascendingOrder); }	//sort homework
+	inline void homeworkSort() { return sortHw_(); }	//sort homework in ascending order
+	inline void homeworkSort(const bool& ascendingOrder) { return sortHw_(ascendingOrder); }	//sort homework
 
 	//static functions
 	inline static int count() { return student_count_; }	//returns the count of objects made of this class
+
+	//OPERATORS
+
+	//constructor copies
+	void operator()();
+	void operator()(string name, string surname);
+	void operator()(Student obj);
+
+	//stream operators
+	friend std::ostream& operator<<(std::ostream& out, const Student& obj);
+	friend std::istream& operator>>(std::istream& in, Student& obj);
+
+	//bool operators
+	inline friend bool operator==(const Student& a, const Student& b) { return a.name_ == b.name_ && a.surname_ == b.surname_ && a.average_ == b.average_ &&
+		a.median_ == b.median_ && a.final_mark_ == b.final_mark_ && a.hw_ == b.hw_; }
+	inline friend bool operator!=(const Student& a, const Student& b) { return !(a == b); }
+	inline friend bool operator>(const Student& a, const Student& b) { return a.final_mark_ > b.final_mark_; }
+	inline friend bool operator<(const Student& a, const Student& b) { return a.final_mark_ < b.final_mark_; }
+	inline friend bool operator>=(const Student& a, const Student& b) { return a.final_mark_ >= b.final_mark_; }
+	inline friend bool operator<=(const Student& a, const Student& b) { return a.final_mark_ <= b.final_mark_; }
+
 
 	//destructor
 	~Student();

@@ -43,7 +43,7 @@ Student Student::copy(const Student& it)
 
 double Student::averageCalc()
 {
-	double avg = avgCalc();
+	double avg = avgCalc_();
 #ifdef AVERAGE
 	final_mark_ = avg;
 #endif
@@ -51,7 +51,7 @@ double Student::averageCalc()
 }
 
 //function returns the avarage value of the vector array
-double Student::avgCalc()
+double Student::avgCalc_()
 {
 	//calculate the sum of array and return the average
 	int sum = 0;
@@ -73,7 +73,7 @@ double Student::avgCalc()
 
 double Student::medianCalc()
 {
-	double med = medCalc();
+	double med = medCalc_();
 #ifdef MEDIAN
 	final_mark_ = med;
 #endif;
@@ -81,7 +81,7 @@ double Student::medianCalc()
 }
 
 //function returns the median value of the vector array
-double Student::medCalc()
+double Student::medCalc_()
 {
 	//we need to sort the array in ascending order
 #ifndef LIST
@@ -136,7 +136,7 @@ public:
 };
 
 //sorts in ascending order
-void Student::sortHw()
+void Student::sortHw_()
 {
 #ifndef LIST
 	std::sort(hw_.begin(), hw_.end());
@@ -149,7 +149,7 @@ void Student::sortHw()
 
 
 //if true sort ascending, if false - descending order
-void Student::sortHw(bool ascendingOrder)
+void Student::sortHw_(bool ascendingOrder)
 {
 #ifndef LIST
 	if (!ascendingOrder)
@@ -204,6 +204,164 @@ void Student::print()
 	cout << "\nMediana:\t\t" << median_;
 	cout << "\nGalutinis balas:\t\t" << final_mark_;
 	cout << "\n";
+}
+
+//operators
+void Student::operator()()
+{
+	name_ = "";
+	surname_ = "";
+	exam_ = 0;
+	average_ = 0;
+	median_ = 0;
+	final_mark_ = 0;
+	student_count_++;
+}
+
+void Student::operator()(string name, string surname)
+{
+	name_ = name;
+	surname_ = surname;
+	exam_ = 0;
+	average_ = 0;
+	median_ = 0;
+	final_mark_ = 0;
+	student_count_++;
+}
+
+void Student::operator()(Student obj)
+{
+	name_ = obj.name_;
+	surname_ = obj.surname_;
+	exam_ = obj.exam_;
+	hw_ = obj.hw_;
+	average_ = obj.average_;
+	median_ = obj.median_;
+	final_mark_ = obj.final_mark_;
+}
+
+std::ostream& operator<<(std::ostream& out, const Student& obj)
+{
+	out << "Informacija apie studenta:\n";
+	out << "Vardas:\t\t" << obj.name_;
+	out << "\nPavarde:\t\t" << obj.surname_;
+	out << "\nNamu darbu kiekis:\t\t" << obj.hw_.size();
+	out << "\nNamu darbu ivertinimai:\t\t";
+	for (auto const& it : obj.hw_)
+		out << it << " ";
+	out << "\nEgzamino rezultatas:\t\t" << obj.exam_;
+	out << "\nVidurkis:\t\t" << obj.average_;
+	out << "\nMediana:\t\t" << obj.median_;
+	out << "\nGalutinis balas:\t\t" << obj.final_mark_;
+	out << "\n";
+}
+
+
+std::istream& operator>>(std::istream& in, Student& obj)
+{
+	//student.push_back(Student());	//push back structure array
+	//int count = student.size() - 1;	//get count of student
+
+	Student temp_stud;
+
+	//get name
+	cout << "Iveskite studento varda: ";
+	string name;
+	temp_stud.dollarSign_();
+	in >> name;
+	temp_stud.setName(name);
+
+	//get surname
+	cout << "Iveskite studento pavarde: ";
+	string surname;
+	temp_stud.dollarSign_();
+	in >> surname;
+	temp_stud.setSurname(surname);
+
+
+	//begin of 'input homework'
+	cout << "Dabar veskite namu darbu rezultatus (minimali verte 1, maksimali 10).\n";
+	cout << "Atsitiktiniam namu darbu ir egzaminu rezultatu sugeneravimui, rasykite \"rand\".\n";
+	cout << "Kai baigsite, iveskite \"egz\": ";
+	string temp_input;
+
+	intContainer hw;
+	while (temp_input != "egz")
+	{
+		temp_stud.dollarSign_();
+		in >> temp_input;
+
+		//break if input is 'egz'
+		if (temp_input == "egz")
+			break;
+
+		//begin of 'randomize homework results'
+		if (temp_input == "rand")
+		{
+			int max_rand = 20;	//20 is maximum amount of homework currently
+			//begin of 'rand error message'
+			//if homework amount is 20 or more, don't randomize
+			if (max_rand - hw.size() < 1)
+			{
+				cout << "Negeneruojama, kai yra virs " << max_rand << " namu darbu.";
+				continue;
+			}
+			//end of 'rand error message'
+
+			int rand_hw_num = rand() % (max_rand - hw.size());	//get random homework amount
+
+			//set randomized marks to homeworks and then exam
+			for (int i = 0; i < rand_hw_num; i++)
+				hw.push_back(1 + rand() % 10);	//randomize between 1 and 10
+
+			temp_stud.setHomework(hw);
+			temp_stud.setExam(1 + rand() % 10);	//randomize exam
+
+			obj = temp_stud;
+			return in;
+		}
+		//end of 'randomize homework results'
+
+		//get mark input
+		if (temp_input == "1" || temp_input == "2" || temp_input == "3" || temp_input == "4" || temp_input == "5" || temp_input == "6"
+			|| temp_input == "7" || temp_input == "8" || temp_input == "9" || temp_input == "10")//if the input is between 1 and 10 inclusive
+			hw.push_back(std::stoi(temp_input));	//add to hw array
+		//if invalid character is inputed throw error message
+		else
+		{
+			cout << "Invalid character(s). Expected numbers between 1 and 10.\n";
+			continue;
+		}
+		temp_stud.setHomework(hw);
+	}
+
+#ifndef LIST
+	hw.shrink_to_fit();
+#endif
+	//end of 'input homework'
+
+	//begin of 'input of exam'
+	cout << "Iveskite egzamino rezultata (nuo 1 iki 10): ";
+	while (1)
+	{
+		temp_stud.dollarSign_();
+		in >> temp_input;
+		if (temp_input == "1" || temp_input == "2" || temp_input == "3" || temp_input == "4" || temp_input == "5" || temp_input == "6"
+			|| temp_input == "7" || temp_input == "8" || temp_input == "9" || temp_input == "10")//if the input is between 1 and 10 inclusive
+			break;
+		cout << "Klaida. Neteisingas egzamino rezultato formatas. Iveskite egzamino rezultata (nuo 1 iki 10): ";
+	}
+
+	if (temp_input != "10")
+		temp_stud.setExam(std::stoi(temp_input));
+	else
+		temp_stud.setExam(10);
+	//end of 'input of exam'
+
+	cout << "\nStudentas sekmingai ivestas!\n";
+
+	obj = temp_stud;
+	return in;
 }
 
 

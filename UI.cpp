@@ -187,7 +187,8 @@ void UI_main(StudentContainer& student, StudentContainer& cool_stud, StudentCont
 		{
 			try
 			{
-				Student temp = getLocalInput();	//lets the user to write it's own input into vector array
+				Student temp;	//lets the user to write it's own input into vector 
+				cin >> temp;
 				student.push_back(temp);
 			}
 			catch (const char* msg) //if error
@@ -199,7 +200,7 @@ void UI_main(StudentContainer& student, StudentContainer& cool_stud, StudentCont
 
 
 		//calculate average
-		if (command_str == "AVG")
+		if (command_str == "AVG" || command_str == "AVERAGE")
 		{
 			UI_Avg(student);
 			continue;
@@ -207,14 +208,14 @@ void UI_main(StudentContainer& student, StudentContainer& cool_stud, StudentCont
 
 
 		//calculate median
-		if (command_str == "MED")
+		if (command_str == "MED" || command_str == "MEDIAN")
 		{
 			UI_Med(student);
 			continue;
 		}
 
 		//if 'best-worst' is selected, pick students with high marks in one array, and students with bad marks in another array
-		if (command_str == "BEST-WORST")
+		if (command_str == "BEST-WORST" || command_str == "WORST-BEST")
 		{
 			UI_BestWorst(student, cool_stud, lame_stud);
 			continue;
@@ -223,7 +224,7 @@ void UI_main(StudentContainer& student, StudentContainer& cool_stud, StudentCont
 
 
 		//if 'best-worst' is selected, pick students with high marks in one array, and students with bad marks in another array
-		if (command_str == "BEST-WORST1")
+		if (command_str == "BEST-WORST1" || command_str == "WORST-BEST1")
 		{
 			UI_BestWorst(student, cool_stud, lame_stud, 1);
 			continue;
@@ -231,14 +232,14 @@ void UI_main(StudentContainer& student, StudentContainer& cool_stud, StudentCont
 
 
 		//if user wants to write best-worst students into seperate files
-		if (command_str == "BEST-WORST-TO-FILE")
+		if (command_str == "BEST-WORST-TO-FILE" || command_str == "WORST-BEST-TO-FILE")
 		{
 			UI_BestWorstToFile(student, cool_stud, lame_stud);
 			continue;
 		}
 
 		//if user wants to clear memory
-		if (command_str == "DEL-STUD")
+		if (command_str == "DEL-STUD" || command_str == "STUD-DEL")
 		{
 			UI_Del(student);
 			UI_Del(cool_stud);
@@ -246,7 +247,7 @@ void UI_main(StudentContainer& student, StudentContainer& cool_stud, StudentCont
 			continue;
 		}
 
-		if (command_str == "RESULTS")
+		if (command_str == "RESULTS" || command_str == "RESULT")
 		{
 			//print results
 			cout << "-------------RESULTS OF student---------------\n\n";
@@ -257,7 +258,7 @@ void UI_main(StudentContainer& student, StudentContainer& cool_stud, StudentCont
 
 
 		//if user wants to end the input, write 'end' to break the loop
-		if (command_str == "END" || command_str == "EXIT")
+		if (command_str == "END" || command_str == "EXIT" || command_str == "LEAVE")
 			break;
 
 		if (command_str == "TEST")

@@ -16,6 +16,8 @@ int main()
 
 	Timer timer;
 
+	
+
 	UI_startGuide(student, cool_stud, lame_stud, file_inp);
 
 	cout << "TOTAL TIME TAKEN: " << std::setprecision(10) << timer.elapsed() << "s\n";
