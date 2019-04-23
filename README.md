@@ -11,6 +11,14 @@ Pagrindinis skirtumas tarp antros ir trečios - objektiškai orientuotas program
 Naudojant CMake sukurti projektą, tada galima sukompiliuot mėgstamu kompaileriu ar IDE, taip pat makefile.
 
 # Changelog
+### [v1.2](https://github.com/abelzis/Trecioji-Uzduotis/releases/tag/v1.2) (2019-04-23)
+**Pridėta**
+  - Operatoriai: `()`, `<<`, `>>`, `==`, `!=`, `>`, `<`, `>=`, `<=`
+  
+**Koreguota**
+  - Papildyti konstruktoriai
+  
+
 ### [v1.1](https://github.com/abelzis/Trecioji-Uzduotis/releases/tag/v1.1) (2019-04-20)
 **Pridėta**
   - Struktūros pakeistos į klases
