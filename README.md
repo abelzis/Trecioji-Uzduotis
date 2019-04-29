@@ -13,7 +13,7 @@ Naudojant CMake sukurti projektą, tada galima sukompiliuot mėgstamu kompaileri
 # Changelog
 ### [v1.2](https://github.com/abelzis/Trecioji-Uzduotis/releases/tag/v1.2) (2019-04-23)
 **Pridėta**
-  - Operatoriai: `()`, `<<`, `>>`, `==`, `!=`, `>`, `<`, `>=`, `<=`
+  - `class Student` Operatoriai: `()`, `<<`, `>>`, `==`, `!=`, `>`, `<`, `>=`, `<=`
   
 **Koreguota**
   - Papildyti konstruktoriai
