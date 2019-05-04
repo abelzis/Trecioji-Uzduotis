@@ -328,3 +328,9 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+
+# .txt data files
+*.txt
+
+# Don't ignore CMakeLists.txt
+!CMakeLists.txt
