@@ -3,6 +3,46 @@
 
 int Student::student_count_ = 0;	//initialize stundet_count_ static
 
+//constructors
+//Student::Student(Student& obj)
+//{
+//	student_count_++;
+//
+//	name_ = obj.name_;
+//	surname_ = obj.surname_;
+//	hw_ = obj.hw_;
+//	exam_ = obj.exam_;
+//	average_ = obj.average_;
+//	median_ = obj.median_;
+//	final_mark_ = obj.final_mark_;
+//}
+
+//Student::Student(Student&& obj)
+//{
+//	//move elements
+//	hw_.clear();
+//	hw_.shrink_to_fit();
+//	hw_ = obj.hw_;
+//	exam_ = obj.exam_;
+//	name_ = obj.name;
+//	surname_ = obj.surname_;
+//	average_ = obj.average_;
+//	median_ = obj.median_;
+//	final_mark_ = obj.final_mark_;
+//
+//	//delete, release or set to default source object
+//	obj.hw_.clear();
+//	obj.hw_.shrink_to_fit;
+//	obj.exam_ = 0;
+//	obj.name_.clear();
+//	obj.name_.shrink_to_fit();
+//	obj.surname_.clear();
+//	obj.surname_.shrink_to_fit();
+//	obj.average_ = 0;
+//	obj.median_ = 0;
+//	obj.final_mark_ = 0;
+//}
+
 //average or median as a parameter
 void Student::setFinalMark(double const criteria)
 {
@@ -25,19 +65,19 @@ void Student::setFinalMark()
 
 
 //copies information from student
-Student Student::copy(const Student& it)
+Student& Student::copy(const Student& it)
 {
-	Student temp;
+	student_count_++;
 
-	temp.setName(it.name());
-	temp.setSurname(it.surname());
-	temp.setAverage(it.average());
-	temp.setMedian(it.median());
-	temp.setExam(it.exam());
-	temp.setHomework(it.homework());
-	temp.setFinalMark(it.finalMark());
+	this->name_ = it.name_;
+	this->surname_ = it.surname_;
+	this->hw_ = it.hw_;
+	this->average_ = it.average_;
+	this->median_ = it.median_;
+	this->exam_ = it.exam_;
+	this->final_mark_ = it.exam_;
 
-	return temp;
+	return *this;
 }
 
 
@@ -63,6 +103,9 @@ double Student::avgCalc_()
 		double avg = 0.4*(double)((double)sum / (double)hw_.size()) + 0.6*exam_;
 		if (avg < 0 || avg > 10)
 			return 0;
+
+		if (avg < 5 && avg >= 4.990000)	//fix the issue where 4.995 <= avg < 5.00 would have been assigned a value of 5.00 when writting to file (lame_x.txt)
+			avg = 4.99;
 		return avg;
 	}
 	if (hw_.size() == 0 && exam_ >= 1 && exam_ <= 10)	//if no homeworks are done, but atleast exam is passed
@@ -105,6 +148,9 @@ double Student::medCalc_()
 		double med = 0.4*(double)(*it) + 0.6*exam_;
 		if (med < 0 || med > 10)
 			return 0;
+
+		if (med < 5 && med >= 4.990000)	//fix the issue where 4.995 <= med < 5.00 would have been assigned a value of 5.00 when writting to file (lame_x.txt)
+			med = 4.99;
 		return med;
 	}
 
@@ -117,6 +163,9 @@ double Student::medCalc_()
 			double med = 0.4*((1.0*(*(--it)) + 1.0*(*(++it))) / 2) + 0.6*exam_;
 			if (med < 0 || med > 10)
 				return 0;
+
+			if (med < 5 && med >= 4.990000)	//fix the issue where 4.995 <= med < 5.00 would have been assigned a value of 5.00 when writting to file (lame_x.txt)
+				med = 4.99;
 			return med;
 		}
 		if (hw_.size() == 0 && exam_ >= 1 && exam_ <= 10)	//if no homeworks are done, but atleast exam is passed
@@ -170,23 +219,7 @@ void Student::sortHw_(bool ascendingOrder)
 //set values to NULL or 0 otherwise
 void Student::clear()
 {
-	//delete homework vectors
-	hw_.clear();
-	if (!hw_.empty())
-		cout << "Error: homework array could not have been deleted.";
-	
-	name_.clear();
-	if (!name_.empty())
-		cout << "Error: name string could not have been deleted.";
-
-	surname_.clear();
-	if (!surname_.empty())
-		cout << "Error: surname string could not have been deleted.";
-
-	exam_ = 0;
-	average_ = 0;
-	median_ = 0;
-	final_mark_ = 0;
+	this->~Student();
 }
 
 //print all the info about student
@@ -218,7 +251,9 @@ void Student::operator()()
 	student_count_++;
 }
 
-void Student::operator()(string name, string surname)
+
+//copy constructor using parenthesis operator
+void Student::operator()(const string& name, const string& surname)
 {
 	name_ = name;
 	surname_ = surname;
@@ -229,7 +264,8 @@ void Student::operator()(string name, string surname)
 	student_count_++;
 }
 
-void Student::operator()(Student obj)
+//copy constructor using parenthesis operator
+void Student::operator()(const Student& obj)
 {
 	name_ = obj.name_;
 	surname_ = obj.surname_;
@@ -238,22 +274,78 @@ void Student::operator()(Student obj)
 	average_ = obj.average_;
 	median_ = obj.median_;
 	final_mark_ = obj.final_mark_;
+	student_count_++;
 }
+
+//copy assignments
+//Student& Student::operator=(const Student& obj)
+//{
+//	if (&obj == this)
+//	{ 
+//		name_ = obj.name_;
+//		surname_ = obj.surname_;
+//		exam_ = obj.exam_;
+//		hw_ = obj.hw_;
+//		average_ = obj.average_;
+//		median_ = obj.median_;
+//		final_mark_ = obj.final_mark_;
+//
+//		student_count_++;
+//	}
+//	return *this;
+//}
+
+//TODO 
+//move operators and constructors
+//***************************
+
+////move assignment operator
+//Student& Student::operator=(Student&& obj)
+//{
+//	if (&obj != this)	//if object is trying to be moved to the same place, don't do anything
+//	{
+//		//move elements
+//		hw_.clear();
+//		hw_.shrink_to_fit();
+//		hw_ = obj.hw_;
+//		exam_ = obj.exam_;
+//		name_ = obj.name;
+//		surname_ = obj.surname_;
+//		average_ = obj.average_;
+//		median_ = obj.median_;
+//		final_mark_ = obj.final_mark_;
+//
+//		//delete, release or set to default source object
+//		obj.hw_.clear();
+//		obj.hw_.shrink_to_fit;
+//		obj.exam_ = 0;
+//		obj.name_.clear();
+//		obj.name_.shrink_to_fit();
+//		obj.surname_.clear();
+//		obj.surname_.shrink_to_fit();
+//		obj.average_ = 0;
+//		obj.median_ = 0;
+//		obj.final_mark_ = 0;
+//	}
+//	return *this;
+//}
 
 std::ostream& operator<<(std::ostream& out, const Student& obj)
 {
-	out << "Informacija apie studenta:\n";
-	out << "Vardas:\t\t" << obj.name_;
-	out << "\nPavarde:\t\t" << obj.surname_;
-	out << "\nNamu darbu kiekis:\t\t" << obj.hw_.size();
-	out << "\nNamu darbu ivertinimai:\t\t";
+	out << "\nInformacija apie studenta:\n";
+	out << "Vardas: \t\t\t" << obj.name_;
+	out << "\nPavarde: \t\t\t" << obj.surname_;
+	out << "\nNamu darbu kiekis: \t\t" << obj.hw_.size();
+	out << "\nNamu darbu ivertinimai: \t";
 	for (auto const& it : obj.hw_)
 		out << it << " ";
-	out << "\nEgzamino rezultatas:\t\t" << obj.exam_;
-	out << "\nVidurkis:\t\t" << obj.average_;
-	out << "\nMediana:\t\t" << obj.median_;
-	out << "\nGalutinis balas:\t\t" << obj.final_mark_;
+	out << "\nEgzamino rezultatas: \t\t" << obj.exam_;
+	out << "\nVidurkis: \t\t\t" << obj.average_;
+	out << "\nMediana: \t\t\t" << obj.median_;
+	out << "\nGalutinis balas: \t\t" << obj.final_mark_;
 	out << "\n";
+
+	return out;
 }
 
 
@@ -308,14 +400,19 @@ std::istream& operator>>(std::istream& in, Student& obj)
 			}
 			//end of 'rand error message'
 
-			int rand_hw_num = rand() % (max_rand - hw.size());	//get random homework amount
+			//initialize random device and set a uniform distribution of integers between 1 and 10
+			RandomEngine engine;
+			std::uniform_int_distribution<int> dist = engine.uni_int_distr(1, 10);
+			std::uniform_int_distribution<int> dist2 = engine.uni_int_distr(0, int(max_rand - hw.size() - 1));
+
+			int rand_hw_num = dist2(engine.mt);	//get random homework amount
 
 			//set randomized marks to homeworks and then exam
 			for (int i = 0; i < rand_hw_num; i++)
-				hw.push_back(1 + rand() % 10);	//randomize between 1 and 10
+				hw.push_back(dist(engine.mt));	//randomize between 1 and 10
 
 			temp_stud.setHomework(hw);
-			temp_stud.setExam(1 + rand() % 10);	//randomize exam
+			temp_stud.setExam(dist(engine.mt));	//randomize exam
 
 			obj = temp_stud;
 			return in;
@@ -368,6 +465,7 @@ std::istream& operator>>(std::istream& in, Student& obj)
 //delete student object vector
 Student::~Student()
 {
+	//cout << "DESTRUCTOR CALLED\n";
 	student_count_--;
 
 	//delete homework vectors

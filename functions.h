@@ -6,7 +6,7 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
-#include <random>	//random device
+#include "randomEngine.h"
 #include <string>
 #include "studentClass.h"
 
@@ -29,7 +29,6 @@ void openFile(ifstream& file);
 void generateFile(ofstream& file, const int count);
 bool checkIfStrIsNum(const string str);
 
-Student getLocalInput();
 void readFromFile(ifstream& kursiokai, StudentContainer &student);
 void sortBestWorst(StudentContainer& student, StudentContainer& cool, StudentContainer& lame);
 StudentContainer sortBestWorst2(StudentContainer& student);

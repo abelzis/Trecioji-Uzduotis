@@ -30,6 +30,12 @@
     <ClInclude Include="timerClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="randomEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="humanClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Second_Task.cpp">
@@ -42,6 +48,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="studentClass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="humanClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

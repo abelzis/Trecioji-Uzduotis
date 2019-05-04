@@ -33,8 +33,11 @@ using std::deque;
 //end of 'DEQUE include'
 
 
-#include <iostream>
 #include <algorithm>
+#include "humanClass.h"
+#include <iomanip>
+#include <iostream>
+#include "randomEngine.h"
 #include <string>
 using std::string;
 using std::cout;
@@ -52,12 +55,12 @@ typedef deque<int> intContainer;
 
 
 //structure of student
-class Student {
+class Student : protected Human
+{
 private:	
 	//variables
 	intContainer hw_;	//homework marks
 	int exam_;	//exam mark
-	string name_, surname_;
 	double average_, median_;	//average of final mark and median of final mark
 	double final_mark_;
 
@@ -73,12 +76,15 @@ private:
 
 public:	//interface
 	//constructors
-	Student() : exam_(0), average_(0), median_(0), final_mark_(0), name_(""), surname_("") { student_count_++; }	//default
-	Student(string name, string surname) : name_(name), surname_(surname), exam_(0), average_(0), median_(0), final_mark_(0) { student_count_++; }
+	Student() : Human{}, exam_(0), average_(0), median_(0), final_mark_(0) { student_count_++; }	//default
+	Student(string name) : Human{ name }, exam_(0), average_(0), median_(0), final_mark_(0) { student_count_++; }
+	Student(string name, string surname) : Human{ name, surname }, exam_(0), average_(0), median_(0), final_mark_(0) { student_count_++; }
+	//Student(Student& obj);
+	//Student(Student&& obj);
 
 	//get'er functions
-	inline string name() const { return name_; }	//get name
-	inline string surname() const { return surname_; }	//get surname
+	inline string name() const { return name_; }	//get name from Human class
+	inline string surname() const { return surname_; }	//get surname from Human class
 	inline double average() const { return average_; }	//get average
 	inline double median() const { return median_; }	//get median
 	inline double finalMark() const { return final_mark_; }	//get final mark
@@ -86,8 +92,9 @@ public:	//interface
 	inline int exam() const { return exam_; }	//get exam mark
 
 	//set'er functions
-	inline void setName(const string& name) { name_ = name; }	//set name
-	inline void setSurname(const string& surname) { surname_ = surname; }	//set surname
+
+	inline void setName(const string& name) { name_ = name; }	//set name in Human class
+	inline void setSurname(const string& surname) { surname_ = surname; }	//set surname in Human class
 	inline void setExam(const int& exam) { exam_ = exam; }	//set exam
 	inline void setHomework(const intContainer& homework) { hw_ = homework; }	//set homework
 	inline void setAverage(const double& average) { average_ = average; }	//set average mark
@@ -96,7 +103,7 @@ public:	//interface
 	void setFinalMark();
 
 	//other functions
-	Student copy(const Student& it);
+	Student& copy(const Student& it);
 	double averageCalc();	//function calculates the average
 	double medianCalc(); //function calculates the median
 	void clear();	//reset values to NULL
@@ -109,10 +116,17 @@ public:	//interface
 
 	//OPERATORS
 
-	//constructor copies
+	//'constructor' copies
 	void operator()();
-	void operator()(string name, string surname);
-	void operator()(Student obj);
+	void operator()(const string& name, const string& surname);
+	void operator()(const Student& obj);
+
+
+	//copy
+	//Student& operator=(const Student& obj);
+
+	//move
+	//Student& operator=(Student&& obj);
 
 	//stream operators
 	friend std::ostream& operator<<(std::ostream& out, const Student& obj);

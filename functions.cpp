@@ -28,18 +28,18 @@ void openFile(ifstream& file)
 //function generates a file for future inputs
 void generateFile(ofstream& file, const int count)
 {
-	std::random_device rd;	//initialize random device
-	std::mt19937 mt(rd());	//seed mt engine
-	std::uniform_int_distribution<int> dist1(1, 10);	//set uniform distribution for homework marks
-	std::uniform_int_distribution<int> dist2(0, 50);	//set uniform distribution for homework amount
+	RandomEngine engine;
+	std::uniform_int_distribution<int> dist1 = engine.uni_int_distr(1, 10);
+	std::uniform_int_distribution<int> dist2 = engine.uni_int_distr(0, 50);
+
 	if (file.is_open())
 	{
 		for (int i = 0; i < count; i++)
 		{
 			file << "Vardas" << i << " Pavarde" << i;
-			int randomness = dist2(mt);
+			int randomness = dist2(engine.mt);
 			for (int j = 0; j < randomness; j++)
-				file << " " << dist1(mt);
+				file << " " << dist1(engine.mt);
 			file << "\n";
 		}
 		cout << "Failas sekmingai sugeneruotas su " << count << " objektu.\n\n";
@@ -60,114 +60,6 @@ bool checkIfStrIsNum(const string str)
 			return false;
 	}
 	return true;
-}
-
-
-
-//function gets input and stores to student array
-Student getLocalInput()
-{
-	//student.push_back(Student());	//push back structure array
-	//int count = student.size() - 1;	//get count of student
-
-	Student temp_stud;
-
-	//get name
-	cout << "Iveskite studento varda: ";
-	string name;
-	dollarSign();
-	cin >> name;
-	temp_stud.setName(name);
-
-	//get surname
-	cout << "Iveskite studento pavarde: ";
-	string surname;
-	dollarSign();
-	cin >> surname;
-	temp_stud.setName(surname);
-
-
-	//begin of 'input homework'
-	cout << "Dabar veskite namu darbu rezultatus (minimali verte 1, maksimali 10).\n";
-	cout << "Atsitiktiniam namu darbu ir egzaminu rezultatu sugeneravimui, rasykite \"rand\".\n";
-	cout << "Kai baigsite, iveskite \"egz\": ";
-	string temp_input;
-
-	intContainer hw;
-	while (temp_input != "egz")
-	{
-		dollarSign();
-		cin >> temp_input;
-
-		//break if input is 'egz'
-		if (temp_input == "egz")
-			break;
-
-		//begin of 'randomize homework results'
-		if (temp_input == "rand")
-		{
-			int max_rand = 20;	//20 is maximum amount of homework currently
-			//begin of 'rand error message'
-			//if homework amount is 20 or more, don't randomize
-			if (max_rand - hw.size() < 1)
-			{
-				cout << "Negeneruojama, kai yra virs " << max_rand << " namu darbu.";
-				continue;
-			}
-			//end of 'rand error message'
-
-			int rand_hw_num = rand() % (max_rand - hw.size());	//get random homework amount
-
-			//set randomized marks to homeworks and then exam
-			for (int i = 0; i < rand_hw_num; i++)
-				hw.push_back(1 + rand() % 10);	//randomize between 1 and 10
-
-			temp_stud.setHomework(hw);
-			temp_stud.setExam(1 + rand() % 10);	//randomize exam
-
-			return temp_stud;
-		}
-		//end of 'randomize homework results'
-
-		//get mark input
-		if (temp_input == "1" || temp_input == "2" || temp_input == "3" || temp_input == "4" || temp_input == "5" || temp_input == "6"
-			|| temp_input == "7" || temp_input == "8" || temp_input == "9" || temp_input == "10")//if the input is between 1 and 10 inclusive
-			hw.push_back(std::stoi(temp_input));	//add to hw array
-		//if invalid character is inputed throw error message
-		else
-		{
-			cout << "Invalid character(s). Expected numbers between 1 and 10.\n";
-			continue;
-		}
-		temp_stud.setHomework(hw);
-	}
-
-#ifndef LIST
-	hw.shrink_to_fit();
-#endif
-	//end of 'input homework'
-
-	//begin of 'input of exam'
-	cout << "Iveskite egzamino rezultata (nuo 1 iki 10): ";
-	while (1)
-	{
-		dollarSign();
-		cin >> temp_input;
-		if (temp_input == "1" || temp_input == "2" || temp_input == "3" || temp_input == "4" || temp_input == "5" || temp_input == "6"
-			|| temp_input == "7" || temp_input == "8" || temp_input == "9" || temp_input == "10")//if the input is between 1 and 10 inclusive
-			break;
-		cout << "Klaida. Neteisingas egzamino rezultato formatas. Iveskite egzamino rezultata (nuo 1 iki 10): ";
-	}
-
-	if (temp_input != "10")
-		temp_stud.setExam(std::stoi(temp_input));
-	else
-		temp_stud.setExam(10);
-	//end of 'input of exam'
-
-	cout << "\nStudentas sekmingai ivestas!\n";
-
-	return temp_stud;
 }
 
 
@@ -245,6 +137,7 @@ int getExam(string& str)
 		else
 			str.erase(str.length() - 1, 1);
 	}
+	return 0;
 }
 
 
@@ -267,6 +160,10 @@ void readFromFile(ifstream& file, StudentContainer &student)
 		//begin of 'read from kursiokai'
 		while (std::getline(file, file_str))	//getlines until eof
 		{
+			//removes unwanted symbols from the beginning
+			while (file_str[0] < 0 || file_str[0] > 255)
+				file_str.erase(0, 0 + 1);
+
 			Student temp_stud;
 
 			//begin of 'character scan from file_str'
@@ -294,69 +191,76 @@ void readFromFile(ifstream& file, StudentContainer &student)
 			intContainer hw;	//create temporary homework array
 			while (file_str.length() > 0)	//search for homework results between whitespaces
 			{
-				//begin of 'if digit found'
-				if (isdigit(file_str[str_index]))	//if found digit
-				{
-					//begin of 'any digit but 1'
-					if (file_str[str_index] != '1' && file_str[str_index] != '0')	//if found any digit but '1'
-					{
-						if (file_str[str_index + 1] == ' ' || file_str[str_index + 1] == '.' || file_str.length() == 1)	//if the digit is followed by whitespace or found last character
-							hw.push_back(file_str[str_index] - '0');	//push back into student homework the mark
-						//else means there's junk we should erase
-						else
-							while (file_str[str_index] != ' ' && file_str.length() > 0)
-								file_str.erase(str_index, 1);
-					}
-					//end of 'any digit but 1'
+				//removes unwanted symbols from the beginning
+				while (file_str[str_index] < 0 || file_str[str_index] > 255)
+					file_str.erase(str_index, str_index + 1);
 
-					//begin of 'found 1'
-					if (file_str[str_index] == '1')	//if found '1'
+				if (file_str[str_index] >= 0 && file_str[str_index] <= 255)
+				{
+					//begin of 'if digit found'
+					if (isdigit(file_str[str_index]))	//if found digit
 					{
-						if (file_str[str_index + 1] == ' ')	//if 1 is followed by whitespace
-							hw.push_back(1);	//push back 1
-						else if (file_str[str_index + 1] == '0')	//if 1 is followed by 0
+						//begin of 'any digit but 1'
+						if (file_str[str_index] != '1' && file_str[str_index] != '0')	//if found any digit but '1'
 						{
-							if (file_str[str_index + 2] == ' ' || file_str.length() == 2)	//if 10 is followed by whitespace or found last 2 characters
-								hw.push_back(10);	//push back 10
+							if (file_str[str_index + 1] == ' ' || file_str[str_index + 1] == '.' || file_str.length() == 1)	//if the digit is followed by whitespace or found last character
+								hw.push_back(file_str[str_index] - '0');	//push back into student homework the mark
+							//else means there's junk we should erase
+							else
+								while (file_str[str_index] != ' ' && file_str.length() > 0)
+									file_str.erase(str_index, 1);
 						}
-						//else means there's junk we should erase
-						else
-							while (file_str[str_index] != ' ' && file_str.length() > 0)
-								file_str.erase(str_index, 1);
+						//end of 'any digit but 1'
+
+						//begin of 'found 1'
+						if (file_str[str_index] == '1')	//if found '1'
+						{
+							if (file_str[str_index + 1] == ' ')	//if 1 is followed by whitespace
+								hw.push_back(1);	//push back 1
+							else if (file_str[str_index + 1] == '0')	//if 1 is followed by 0
+							{
+								if (file_str[str_index + 2] == ' ' || file_str.length() == 2)	//if 10 is followed by whitespace or found last 2 characters
+									hw.push_back(10);	//push back 10
+							}
+							//else means there's junk we should erase
+							else
+								while (file_str[str_index] != ' ' && file_str.length() > 0)
+									file_str.erase(str_index, 1);
+						}
+						//end of 'found 1'
 					}
-					//end of 'found 1'
-				}
-				//end of 'if digit found'
+					//end of 'if digit found'
 
-				//begin of 'last characters of homework found'
-				if (file_str.length() == 1 && str_index == 1)	//if reached last character and already manipulated 
-					break;	//then break
-
-				//if found 10
-				if (file_str.length() == 2 && str_index == 2)	//if 2 characters are last
-					if (file_str[0] == '1' && file_str[1] == '0')	//if those are 1 and 0
+					//begin of 'last characters of homework found'
+					if (file_str.length() == 1 && str_index == 1)	//if reached last character and already manipulated 
 						break;	//then break
-				//end of 'last characters of homework found'
 
-				//if the whitespace is found, delete from string beginning up to whitespace inclusive
-				if (file_str[str_index] == ' ')	//if found whitespace
-				{
-					file_str.erase(0, str_index + 1);	//delete the pushed back homework from temporary string
-					str_index = 0;	//reset index
-					continue;	//go next
+					//if found 10
+					if (file_str.length() == 2 && str_index == 2)	//if 2 characters are last
+						if (file_str[0] == '1' && file_str[1] == '0')	//if those are 1 and 0
+							break;	//then break
+					//end of 'last characters of homework found'
+
+					//if the whitespace is found, delete from string beginning up to whitespace inclusive
+					if (file_str[str_index] == ' ')	//if found whitespace
+					{
+						file_str.erase(0, str_index + 1);	//delete the pushed back homework from temporary string
+						str_index = 0;	//reset index
+						continue;	//go next
+					}
+
+					//if found dot
+					if (file_str[str_index] == '.')
+					{
+						str_index = 0;
+						while (file_str[str_index] != ' ' && file_str.length() > 0)
+							file_str.erase(str_index, 1);
+						str_index = 0;
+						continue;
+					}
+
+					str_index++;	//increment by 1
 				}
-
-				//if found dot
-				if (file_str[str_index] == '.')
-				{
-					str_index = 0;
-					while (file_str[str_index] != ' ' && file_str.length() > 0)
-						file_str.erase(str_index, 1);
-					str_index = 0;
-					continue;
-				}
-
-				str_index++;	//increment by 1
 			}
 			//end of 'get homework'
 			//end of 'character scan from file_str'
@@ -411,8 +315,6 @@ void sortBestWorst(StudentContainer& student, StudentContainer& cool, StudentCon
 			cool.push_back(it.copy(it));
 			continue;
 		}
-		if (it.finalMark() > 0 && it.finalMark() < 5 + 0.005)	//if avg is lower than 5, the student is considered loser
-			lame.push_back(it.copy(it));
 	}
 	//shrink to fit (save memory)
 #ifndef LIST
@@ -448,14 +350,7 @@ Student assignTemporaryValues(const StudentContainer::iterator& it)
 {
 	Student temp;	//temporary object
 
-	//temp.copy(*it);
-	temp.setName(it->name());
-	temp.setSurname(it->surname());
-	temp.setAverage(it->average());
-	temp.setMedian(it->median());
-	temp.setExam(it->exam());
-	temp.setMedian(it->median());
-	temp.setFinalMark(it->finalMark());
+	temp.copy(*it);
 
 	return temp;
 }
@@ -488,7 +383,7 @@ StudentContainer sortBestWorst2(StudentContainer& student)
 	//for (auto & it : student)
 	for (it; it != student.end(); ++it)
 	{
-		if (it->finalMark() >= 0 && it->finalMark() + 0.005 < 5)	//if avg is lower than 5, the student is considered loser
+		if (it->finalMark() >= 0 && it->finalMark() < 5)	//if avg is lower than 5, the student is considered loser
 		{
 			if (it->finalMark() != 0)
 				lame.push_back(assignTemporaryValues(it));	//pushback copy of iterator's values
@@ -578,7 +473,7 @@ bool compareNames(Student &a, Student &b)
 }
 
 //returns required setw amount for names
-int longestName(StudentContainer student)
+int longestName(const StudentContainer& student)
 {
 	int longest = 0;
 	for (auto const& it : student)
@@ -589,7 +484,7 @@ int longestName(StudentContainer student)
 
 
 //returns required setw amount for surnames
-int longestSurname(StudentContainer student)
+int longestSurname(const StudentContainer& student)
 {
 	int longest = 0;
 	for (auto const& it : student)
