@@ -8,9 +8,21 @@ Pagrindinis skirtumas tarp antros ir trečios - objektiškai orientuotas program
 [Užduoties aprašas](https://github.com/objprog/paskaitos2019/wiki/3-oji-u%C5%BEduotis)
 
 # Kaip paleisti programą?
-Naudojant CMake sukurti projektą, tada galima sukompiliuot mėgstamu kompaileriu ar IDE, taip pat makefile.
+Naudojant CMake sukurti projektą, tada galima sukompiliuot mėgstamu compileriu mėgiamoje IDE, taip pat, makefile.
 
 # Changelog
+### [v1.5.1](https://github.com/abelzis/Trecioji-Uzduotis/releases/tag/v1.5.1) (2019-05-04)
+**Pridėta**
+  - `RandomEngine` klasė, kuri supaprastina naudojimąsi atsitiktinių skaičių generavimu iš `<random>` bibliotekos
+  - `Human` bazinė klasė. `Student` tapo `Human` klasės išvestine klase
+  
+**Koreguota**
+  - Pataisyta skaitymo iš failo funkija
+  - Daugiau funkcijų tapo `Student` klasės funkcijomis
+  - Sutaisyta klaida, kur kai kurie studentai su galutiniu balu mazesniu nei 5 būtų įrašyti į `lame` failą su vidurkiu lygiu `5.00`
+  - Kiti smulkūs pataisymai
+
+
 ### [v1.2](https://github.com/abelzis/Trecioji-Uzduotis/releases/tag/v1.2) (2019-04-23)
 **Pridėta**
   - `class Student` Operatoriai: `()`, `<<`, `>>`, `==`, `!=`, `>`, `<`, `>=`, `<=`
