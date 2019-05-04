@@ -79,8 +79,6 @@ public:	//interface
 	Student() : Human{}, exam_(0), average_(0), median_(0), final_mark_(0) { student_count_++; }	//default
 	Student(string name) : Human{ name }, exam_(0), average_(0), median_(0), final_mark_(0) { student_count_++; }
 	Student(string name, string surname) : Human{ name, surname }, exam_(0), average_(0), median_(0), final_mark_(0) { student_count_++; }
-	//Student(Student& obj);
-	//Student(Student&& obj);
 
 	//get'er functions
 	inline string name() const { return name_; }	//get name from Human class
@@ -120,13 +118,6 @@ public:	//interface
 	void operator()();
 	void operator()(const string& name, const string& surname);
 	void operator()(const Student& obj);
-
-
-	//copy
-	//Student& operator=(const Student& obj);
-
-	//move
-	//Student& operator=(Student&& obj);
 
 	//stream operators
 	friend std::ostream& operator<<(std::ostream& out, const Student& obj);

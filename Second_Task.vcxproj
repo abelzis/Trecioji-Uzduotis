@@ -156,7 +156,6 @@
   <ItemGroup>
     <ClInclude Include="functions.h" />
     <ClInclude Include="humanClass.h" />
-    <ClInclude Include="pch.h" />
     <ClInclude Include="randomEngine.h" />
     <ClInclude Include="studentClass.h" />
     <ClInclude Include="timerClass.h" />

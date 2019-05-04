@@ -3,46 +3,6 @@
 
 int Student::student_count_ = 0;	//initialize stundet_count_ static
 
-//constructors
-//Student::Student(Student& obj)
-//{
-//	student_count_++;
-//
-//	name_ = obj.name_;
-//	surname_ = obj.surname_;
-//	hw_ = obj.hw_;
-//	exam_ = obj.exam_;
-//	average_ = obj.average_;
-//	median_ = obj.median_;
-//	final_mark_ = obj.final_mark_;
-//}
-
-//Student::Student(Student&& obj)
-//{
-//	//move elements
-//	hw_.clear();
-//	hw_.shrink_to_fit();
-//	hw_ = obj.hw_;
-//	exam_ = obj.exam_;
-//	name_ = obj.name;
-//	surname_ = obj.surname_;
-//	average_ = obj.average_;
-//	median_ = obj.median_;
-//	final_mark_ = obj.final_mark_;
-//
-//	//delete, release or set to default source object
-//	obj.hw_.clear();
-//	obj.hw_.shrink_to_fit;
-//	obj.exam_ = 0;
-//	obj.name_.clear();
-//	obj.name_.shrink_to_fit();
-//	obj.surname_.clear();
-//	obj.surname_.shrink_to_fit();
-//	obj.average_ = 0;
-//	obj.median_ = 0;
-//	obj.final_mark_ = 0;
-//}
-
 //average or median as a parameter
 void Student::setFinalMark(double const criteria)
 {
@@ -277,59 +237,6 @@ void Student::operator()(const Student& obj)
 	student_count_++;
 }
 
-//copy assignments
-//Student& Student::operator=(const Student& obj)
-//{
-//	if (&obj == this)
-//	{ 
-//		name_ = obj.name_;
-//		surname_ = obj.surname_;
-//		exam_ = obj.exam_;
-//		hw_ = obj.hw_;
-//		average_ = obj.average_;
-//		median_ = obj.median_;
-//		final_mark_ = obj.final_mark_;
-//
-//		student_count_++;
-//	}
-//	return *this;
-//}
-
-//TODO 
-//move operators and constructors
-//***************************
-
-////move assignment operator
-//Student& Student::operator=(Student&& obj)
-//{
-//	if (&obj != this)	//if object is trying to be moved to the same place, don't do anything
-//	{
-//		//move elements
-//		hw_.clear();
-//		hw_.shrink_to_fit();
-//		hw_ = obj.hw_;
-//		exam_ = obj.exam_;
-//		name_ = obj.name;
-//		surname_ = obj.surname_;
-//		average_ = obj.average_;
-//		median_ = obj.median_;
-//		final_mark_ = obj.final_mark_;
-//
-//		//delete, release or set to default source object
-//		obj.hw_.clear();
-//		obj.hw_.shrink_to_fit;
-//		obj.exam_ = 0;
-//		obj.name_.clear();
-//		obj.name_.shrink_to_fit();
-//		obj.surname_.clear();
-//		obj.surname_.shrink_to_fit();
-//		obj.average_ = 0;
-//		obj.median_ = 0;
-//		obj.final_mark_ = 0;
-//	}
-//	return *this;
-//}
-
 std::ostream& operator<<(std::ostream& out, const Student& obj)
 {
 	out << "\nInformacija apie studenta:\n";
@@ -351,9 +258,6 @@ std::ostream& operator<<(std::ostream& out, const Student& obj)
 
 std::istream& operator>>(std::istream& in, Student& obj)
 {
-	//student.push_back(Student());	//push back structure array
-	//int count = student.size() - 1;	//get count of student
-
 	Student temp_stud;
 
 	//get name
