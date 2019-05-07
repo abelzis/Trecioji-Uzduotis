@@ -3,6 +3,8 @@
 
 int Student::student_count_ = 0;	//initialize stundet_count_ static
 
+
+
 //average or median as a parameter
 void Student::setFinalMark(double const criteria)
 {
@@ -29,13 +31,13 @@ Student& Student::copy(const Student& it)
 {
 	student_count_++;
 
-	this->name_ = it.name_;
-	this->surname_ = it.surname_;
-	this->hw_ = it.hw_;
-	this->average_ = it.average_;
-	this->median_ = it.median_;
-	this->exam_ = it.exam_;
-	this->final_mark_ = it.exam_;
+	name_ = it.name_;
+	surname_ = it.surname_;
+	hw_ = it.hw_;
+	average_ = it.average_;
+	median_ = it.median_;
+	exam_ = it.exam_;
+	final_mark_ = it.exam_;
 
 	return *this;
 }
@@ -235,6 +237,12 @@ void Student::operator()(const Student& obj)
 	median_ = obj.median_;
 	final_mark_ = obj.final_mark_;
 	student_count_++;
+}
+
+Student& Student::operator=(const Student& obj)
+{
+	this->copy(obj);
+	return *this;
 }
 
 std::ostream& operator<<(std::ostream& out, const Student& obj)

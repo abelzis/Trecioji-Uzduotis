@@ -79,6 +79,7 @@ public:	//interface
 	Student() : Human{}, exam_(0), average_(0), median_(0), final_mark_(0) { student_count_++; }	//default
 	Student(string name) : Human{ name }, exam_(0), average_(0), median_(0), final_mark_(0) { student_count_++; }
 	Student(string name, string surname) : Human{ name, surname }, exam_(0), average_(0), median_(0), final_mark_(0) { student_count_++; }
+	Student(const Student& obj) { this->copy(obj); }
 
 	//get'er functions
 	inline string name() const { return name_; }	//get name from Human class
@@ -113,6 +114,9 @@ public:	//interface
 	inline static int count() { return student_count_; }	//returns the count of objects made of this class
 
 	//OPERATORS
+
+	//copy assignment operator
+	Student& operator=(const Student& obj);
 
 	//'constructor' copies
 	void operator()();

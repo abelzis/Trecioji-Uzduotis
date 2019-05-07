@@ -10,6 +10,10 @@
 
 int main()
 {
+	Student a;
+	cin >> a;
+	Student b = a;
+	cout << b;
 	//variables
 	StudentContainer student, cool_stud, lame_stud;	//structure of Student
 
