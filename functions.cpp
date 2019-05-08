@@ -350,7 +350,12 @@ Student assignTemporaryValues(const StudentContainer::iterator& it)
 {
 	Student temp;	//temporary object
 
+#ifndef MYVECTOR
 	temp.copy(*it);
+#endif
+#ifdef MYVECTOR
+	temp.copy(it.value());
+#endif
 
 	return temp;
 }
@@ -366,13 +371,13 @@ StudentContainer sortBestWorst2(StudentContainer& student)
 	//use stable partition to sort students who pass at the begin of the list
 	StudentContainer::iterator it = std::stable_partition(student.begin(), student.end(), passedClass);
 
-	StudentContainer lame1(it, student.end());
+	StudentContainer lame1( it, student.end() );
 	student.erase(it, student.end()); 
 	student.shrink_to_fit();
 
 	it = std::stable_partition(lame1.begin(), lame1.end(), invalidStudent);
 
-	StudentContainer lame(it, lame1.end());
+	StudentContainer lame( it, lame1.end() );
 	lame1.clear();
 #endif
 

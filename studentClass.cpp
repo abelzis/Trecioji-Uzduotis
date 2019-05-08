@@ -37,7 +37,7 @@ Student& Student::copy(const Student& it)
 	average_ = it.average_;
 	median_ = it.median_;
 	exam_ = it.exam_;
-	final_mark_ = it.exam_;
+	final_mark_ = it.final_mark_;
 
 	return *this;
 }

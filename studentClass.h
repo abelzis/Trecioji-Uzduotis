@@ -1,9 +1,10 @@
 #pragma once
 
 //DEFINE CONTAINER:
-#define VECTOR
+//#define VECTOR
 //#define LIST
 //#define DEQUE
+#define MYVECTOR
 
 
 //DEFINE FINAL MARK CRITERIA:
@@ -32,6 +33,10 @@ using std::deque;
 #endif
 //end of 'DEQUE include'
 
+#ifdef MYVECTOR
+#include "Vector.h"
+#endif
+
 
 #include <algorithm>
 #include "humanClass.h"
@@ -51,6 +56,9 @@ typedef list<int> intContainer;
 #endif
 #ifdef DEQUE
 typedef deque<int> intContainer;
+#endif
+#ifdef MYVECTOR
+typedef Vector<int> intContainer;
 #endif
 
 
@@ -150,4 +158,7 @@ typedef list<Student> StudentContainer;
 #endif
 #ifdef DEQUE
 typedef deque<Student> StudentContainer;
+#endif
+#ifdef MYVECTOR
+typedef Vector<Student> StudentContainer;
 #endif
