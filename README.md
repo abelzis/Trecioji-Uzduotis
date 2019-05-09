@@ -25,6 +25,16 @@ ____________________________________________________________________________
   Kelias dienas bei naktis intensyviai (bet žiauriai linksmai <3) dirbau ties `std::vector` replika nuo nulio. Žinoma, buvo susidurta su sunkumais, pradedant nuo šabloninių funkcijų, algoritmu, baigiant operatoriais bei iteratoriais. Galinis rezultatas puikus - pakeitus `std::vector` konteinerį i mano `Vector` repliką, Studentų programa beveik nepasikeitė (prisidėjo kelios eilutės preprocesoriaus kodo lengvam keitimui tarp konteinerių). Taigi, įdomu, kokia sparta bei atminties sunaudojimu pasižymi manasis konteineris?
   
   **Testas**: 1,000,000 studentų, Release, /O2 optimization flag, po 10 bandymų. **`std::vector` vs `Vector`**.
+  
+  **Rezultatai**:
+  
+  ![speed](https://i.gyazo.com/2250c8c168b5d814f9eb85099593a3e4.png)
+  
+  ![memory](https://i.gyazo.com/5d7d5a367449833f6e05f60749250b61.png)
+  
+  Iš rezultatų matyti, kad tiek greičio, tiek atminties atžvilgiu, `std::vector` nuo `Vector`, iš esmės, nesiskiria. Apdoroti milijoną studentų trunka apie 10 sekundžių abiems konteineriams, o tuo metu `Vector` suvalgo truputį daugiau (apie 8%) atminties nei standartinis laimėtojas.
+  
+  Nuoroda į `Vector` biblioteką: [spausti čia](https://github.com/abelzis/Vector-class)
    
 ____________________________________________________________________________
    
