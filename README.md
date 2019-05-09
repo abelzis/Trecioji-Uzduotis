@@ -11,7 +11,7 @@ Pagrindinis skirtumas tarp antros ir trečios - objektiškai orientuotas program
 Naudojant CMake sukurti projektą, tada galima sukompiliuot mėgstamu compileriu mėgiamoje IDE, taip pat, makefile.
 
 # Changelog
-### [v1.5.2.1](https://github.com/abelzis/Trecioji-Uzduotis/releases/tag/v1.5.2.1) (2019-05-09)
+### [v1.5.2a](https://github.com/abelzis/Trecioji-Uzduotis/releases/tag/v1.5.2a) (2019-05-09)
 **Pridėta**
   - `"Vector.h"` biblioteka (asmeninė `std::vector` 'kopija' ([ketvirtoji užduotis](https://github.com/objprog/paskaitos2019/wiki/4-oji-u%C5%BEduotis))). Nuoroda į repozitoriją: [spausti čia](https://github.com/abelzis/Vector-class/blob/master/README.md)
   
