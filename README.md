@@ -29,7 +29,6 @@ ____________________________________________________________________________
   **Rezultatai**:
   
   ![speed](https://i.gyazo.com/2250c8c168b5d814f9eb85099593a3e4.png)
-  
   ![memory](https://i.gyazo.com/5d7d5a367449833f6e05f60749250b61.png)
   
   Iš rezultatų matyti, kad tiek greičio, tiek atminties atžvilgiu, `std::vector` nuo `Vector`, iš esmės, nesiskiria. Apdoroti milijoną studentų trunka apie 10 sekundžių abiems konteineriams, o tuo metu `Vector` suvalgo truputį daugiau (apie 8%) atminties nei standartinis laimėtojas.
