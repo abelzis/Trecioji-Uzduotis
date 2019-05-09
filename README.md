@@ -19,6 +19,17 @@ Naudojant CMake sukurti projektą, tada galima sukompiliuot mėgstamu compileriu
   - Sutaisyta klaida, kur rezultatai išrašomi į failą versijoje `v1.5.1`, buvo neteisingi
   - Sutaisytas atminties valdymo praradimas ir `clear()` funkcija
   
+____________________________________________________________________________
+  **Papildoma informacija bei pastebėjimai** **(papildyta: 2019-05-09)**
+  
+  Kelias dienas bei naktis intensyviai (bet žiauriai linksmai <3) dirbau ties `std::vector` replika nuo nulio. Žinoma, buvo susidurta su sunkumais, pradedant nuo šabloninių funkcijų, algoritmu, baigiant operatoriais bei iteratoriais. Galinis rezultatas puikus - pakeitus `std::vector` konteinerį i mano `Vector` repliką, Studentų programa beveik nepasikeitė (prisidėjo kelios eilutės preprocesoriaus kodo lengvam keitimui tarp konteinerių). Taigi, įdomu, kokia sparta bei atminties sunaudojimu pasižymi manasis konteineris?
+  
+  **Testas**: 1,000,000 studentų, Release, /O2 optimization flag, po 10 bandymų. **`std::vector` vs `Vector`**.
+   
+____________________________________________________________________________
+   
+  
+  
 ### [v1.5.1](https://github.com/abelzis/Trecioji-Uzduotis/releases/tag/v1.5.1) (2019-05-04)
 **Pridėta**
   - `RandomEngine` klasė, kuri supaprastina naudojimąsi atsitiktinių skaičių generavimu iš `<random>` bibliotekos
