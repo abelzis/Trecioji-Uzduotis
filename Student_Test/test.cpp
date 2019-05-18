@@ -1,15 +1,8 @@
 #include "gtest/gtest.h"
-//#include "../Second_Task/src/studentClass.h"
 #include "../Second_Task/src/studentClass.h"
 #include "../Second_Task/src/studentClass.cpp"
 #include "../Second_Task/src/humanClass.h"
 #include "../Second_Task/src/humanClass.cpp"
-//#include "../Second_Task/src/studentClass.h"
-
-//#include "../Second_Task/studentClass.h"
-//#include "../Second_Task/studentClass.cpp"
-//#include "../Second_Task/humanClass.h"
-//#include "../Second_Task/humanClass.cpp"
 
 namespace studenttest
 {
