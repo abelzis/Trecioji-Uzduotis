@@ -8,9 +8,20 @@ Pagrindinis skirtumas tarp antros ir trečios - objektiškai orientuotas program
 [Užduoties aprašas](https://github.com/objprog/paskaitos2019/wiki/3-oji-u%C5%BEduotis)
 
 # Kaip paleisti programą?
-Naudojant CMake sukurti projektą, tada galima sukompiliuot mėgstamu compileriu mėgiamoje IDE, taip pat, makefile.
+Naudojant [CMake](https://cmake.org/download/) sukurti projektą, tada galima sukompiliuot mėgstamu compileriu mėgiamoje IDE, taip pat, makefile. **SVARBU!** Būtina turėti [`Git`](https://git-scm.com/download/)! Kitaip CMake neleis jums sugeneruoti projekto.
 
 # Changelog
+### [v2.0](https://github.com/abelzis/Trecioji-Uzduotis/releases/tag/v2.0) (2019-05-18)
+**Pridėta**
+  - Pridėti [`GoogleTest`](https://github.com/google/googletest) testai `studentclass.h` klasei
+  - Pridėta [`Doxygen`](http://www.doxygen.nl/) dokumentacija `Second_Task` kataloge
+
+**Koreguota**
+  - Sutvarkyta visa GitHub repozitorija
+  - Koreguotas CMake - dabar galima sukurti visą Solution su programa bei testais
+  - Sutaisyta medianos skaičiavimo klaida
+  - Pataisyti studentų klasės konstruktoriai, destruktorius, funkcijos
+
 ### [v1.5.2a](https://github.com/abelzis/Trecioji-Uzduotis/releases/tag/v1.5.2a) (2019-05-09)
 **Pridėta**
   - `"Vector.h"` biblioteka (asmeninė `std::vector` 'kopija' ([ketvirtoji užduotis](https://github.com/objprog/paskaitos2019/wiki/4-oji-u%C5%BEduotis))). Nuoroda į repozitoriją: [spausti čia](https://github.com/abelzis/Vector-class/blob/master/README.md)
